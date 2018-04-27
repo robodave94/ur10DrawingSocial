@@ -1,0 +1,7 @@
+<launch>
+<!-- gnome-terminal command -->
+<param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial" />
+  <node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
+<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="xterm -e"/>
+  <node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
+</launch>
