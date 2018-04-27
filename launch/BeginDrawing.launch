@@ -1,7 +1,44 @@
 <launch>
 <!-- gnome-terminal command -->
-<param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial" />
-  <node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
+
+
+<rosparam param="Section0_AutoFill">
+[[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2]]
+</rosparam>
+
+<rosparam param="Section1_AutoFill">
+[[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2]]
+</rosparam>
+
+<rosparam param="Section2_AutoFill">
+[[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2]]
+</rosparam>
+
+<rosparam param="Section3_AutoFill"> 
+[[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2],
+[0.55, 0.9, -0.4, 0.4, -0.25, 2]]
+</rosparam>
+
+
+<param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
+<param name="ImagesPath" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/" />
+<param name="speedParameters" type="double" value="0.2" />
+<param name="roboIP" type="str" value="10.0.0.157" />
+
+<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
 <node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="xterm -e"/>
-  <node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
+<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
+
+
 </launch>
