@@ -4,7 +4,7 @@ import time
 import rospy
 class RobotResearchObject (object):
     #endregion
-    def _init_(self):
+    def InitBaseVariables(self):
         self.a = rospy.get_param('speedParameters')
         self.v = rospy.get_param('speedParameters')
         self.rob = urx.Robot(rospy.get_param('roboIP'))
@@ -28,7 +28,7 @@ class RobotResearchObject (object):
     def DelayWhileExecuting(self):
         time.sleep(0.25)
         while self.rob.is_program_running() and not self.interuptExec:
-            rospy.loginfo("Moving")
+            time.sleep(0.01)
         return
 
     def ExecuteMultiMotionWait(self,pts):
