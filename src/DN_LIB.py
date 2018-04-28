@@ -154,7 +154,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
             return aniTag[0][0]
         return aniTag[random.randint(0,len(aniTag)-1)][0]
 
-    def ExecuteAnimationSingular(self,animationName,wait=True):
+    def ExecuteAnimationSingular(self,animationName):
         def translateToDifferential(pt):
             newpt = [pt[0], pt[1], pt[2], pt[3], pt[4], pt[5]]
             if self.initHoverPos[0] > 1:

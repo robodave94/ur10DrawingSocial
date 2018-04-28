@@ -1,4 +1,5 @@
 import DN_LIB
+import random
 class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
     def RunningSocialRoutineV1(self):
