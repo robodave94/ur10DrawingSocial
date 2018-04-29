@@ -3,26 +3,31 @@ import rospy
 import SocialRoutineAddon
 import logging
 import cv2
+import numpy
 import DN_LIB
 from std_msgs.msg import String
 
 robotParamters=None
 def AnaylseInterupt(data):
-    print data.data
+    robotParamters.DetectedInteruptSig(data.data)
+    return
 
 def ExecuteCommand(data):
     Command =  data.data
+    print data
     #parseCommand
     if Command == 'cal':
         robotParamters.Calibrate()
     elif Command == 'o':
         robotParamters.printAniPose()
-    elif Command == 'BeginSocialRoutine':
-        #robotParamters.SocialRoutineLoop()
+    elif robotParamters.RunningSocialAction==True and Command[0]=='q':
+        robotParamters.CancelSocialRoutine()
+    elif Command == 'BeginSocialRoutine' or (robotParamters.RunningSocialAction==True and Command[0]!='q'):
+        robotParamters.CalledSocialAction()
     elif Command[0] == 'i':
         robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
     elif Command[0]=='A':
-        robotParamters.ExecuteAnimationSingular(cv2.imread(Command[2:], 0))
+        robotParamters.ExecuteAnimationSingular(Command[2:])
     else:
         print 'Invalid Command Sent'
     return
@@ -32,7 +37,7 @@ def ExecuteCommand(data):
 def initRobot():
     global robotParamters
     robotParamters = SocialRoutineAddon.DrawingRobotInstance()
-    robotParamters.InitializeVariablesROS()
+    robotParamters.InitSocialRoutineSettings()
     robotParamters.Calibrate()
 
 def RobotBegin():

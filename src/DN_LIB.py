@@ -127,7 +127,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
             pts = convertToTDspaceList(y, [image.shape[0], image.shape[1]])
             DrawContour(pts)
         print 'Completed Contour Construction'
-        rob.movel(initHoverPos, acc=self.a, vel=self.v, wait=True)
+        self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
 
     def printAniPose(self):

@@ -1,6 +1,7 @@
 import urx
 from urx import ursecmon
 import time
+import numpy as np
 import rospy
 class RobotResearchObject (object):
     #endregion
@@ -9,6 +10,7 @@ class RobotResearchObject (object):
         self.v = rospy.get_param('speedParameters')
         self.rob = urx.Robot(rospy.get_param('roboIP'))
         self.interuptExec = False
+        self.Interruption = False
         self.secmon = ursecmon.SecondaryMonitor(self.rob.host)
         return
 
@@ -17,6 +19,12 @@ class RobotResearchObject (object):
         print "Robot Endpoint = ", self.rob.getl()
         return
 
+    def DetectedInteruptSig(self,stringInput):
+        strparam = stringInput.split(',')
+        if strparam[0] == 'Collision':
+            self.Interruption = True
+            self.InteruptVector = np.array([float(strparam[1][1:]),float(strparam[2]),float(strparam[2][:-1])])
+        return
     def setFreeDriveFalse(self):
         self.rob.set_freedrive(False)
         return
