@@ -2,6 +2,7 @@
 import rospy
 import ContourExtraction
 import numpy as np
+import cv2
 import math
 #from sklearn import cluster
 #from Tkinter import *
@@ -21,6 +22,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
         self.InitBaseVariables()
         self.endPntPose = [-0.14959202618776724, -0.6892203786569369, 0.45944469344501543,
                            -3.141369099840455, -0.023765232731069934, -0.018604100882098216]
+        self.ResetAnimation()
         return
 
     def ResetAnimation(self):
@@ -44,76 +46,77 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
             aniPose.append(animation)
         return aniPose
 
+    def convertToTDspaceList(self,input, sz):
+        def DetermineZ(x, y):
+            return -((self.zPlaneParameters[0] * x) + (self.zPlaneParameters[1] * y) - self.zPlaneParameters[3]) / \
+                   self.zPlaneParameters[2]
+
+        Imheight = sz[0]
+        Imwidth = sz[1]
+
+        def checkRange(val, Max, Min, typ):
+            if (val <= Max and val >= Min) or (val <= Min and val >= Max):
+                return True
+            print val, ' was out of range between ', Min, ' ', Max, typ
+            return False
+
+        if Imwidth > Imheight:
+            print 'Recognized width is greater than height'
+            lclXMax = self.xZero
+            lclXZero = self.xMax
+            newheight = float(Imheight) / float(Imwidth) * (abs(float(lclXMax) - lclXZero))
+            print newheight, (abs(float(lclXMax) - lclXZero))
+            diff = [self.md[1] + float(newheight / 2), self.md[1] - float(newheight / 2)]
+            lclYZero = min(diff)
+            lclYMax = max(diff)
+        else:
+            print 'Recognized height is greater than width'
+            lclYZero = self.yZero
+            lclYMax = self.yMax
+            newwidth = Imwidth / Imheight * (abs(lclYMax - lclYZero))
+            print Imheight, newwidth
+            diff = [self.md[0] + float(newwidth / 2), self.md[0] - float(newwidth / 2)]
+            lclXMax = max(diff)
+            lclXZero = min(diff)
+            # gray = np.rot90(gray,2)'''
+
+        lclImRatio = float(float(Imheight) / float(Imwidth))
+        print 'Image Details:h.w = ', lclImRatio, Imheight, Imwidth, '----', float(lclYMax - lclYZero) / float(
+            lclXMax - lclXZero)
+        '''if abs(float(lclYMax - lclYZero)/float(lclXMax - lclXZero))!= lclImRatio:
+            print (float(lclYMax) - float(lclYZero))/(float(lclXMax) - float(lclXZero)),'---', lclImRatio
+            print 'lyMax',' --- ',lclYMax
+            print 'lyZero', ' --- ', lclYZero
+            print 'lxMax', ' --- ', lclXMax
+            print 'lxZero', ' --- ', lclXZero
+            print 'yMax', ' --- ', yMax
+            print 'yZero', ' --- ', yZero
+            print 'xMax', ' --- ', xMax
+            print 'xZero', ' --- ', xZero
+            raise ValueError('Ratio Off')'''
+        print lclXMax, lclXZero, lclYMax, lclYZero, sz[0]
+        # print 'xMax_lcl_real', lclXMax, xMax
+        # print 'yMax_lcl_real', lclYMax, yMax
+        # print 'xZro_lcl_real', lclXZero, xZero
+        # print 'yZro_lcl_real', lclYZero, yZero
+        ptlst = []
+        a = float(lclXMax) - float(lclXZero)
+        d = float(lclYMax) - float(lclYZero)
+        for each in input:
+            # X,Y = self.transposeOrientation(each[0],each[1])
+            b = float(each[0]) / float(sz[1])
+            c = float(a) * float(b)
+            e = float(each[1]) / float(sz[0])
+            f = float(e) * float(d)
+            x = c + float(lclXZero)
+            y = f + float(lclYZero)
+            ptlst.append([x, y, DetermineZ(x, y), self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            print x, y
+            if not checkRange(x, lclXZero, lclXMax, ' for X') or not checkRange(y, lclYZero, lclYMax, ' for Y'):
+                raise ValueError('Range Error')
+        return ptlst
+
     def RunDrawing(self,image):
-        def convertToTDspaceList(input, sz):
-            def DetermineZ(x, y):
-                return -((self.zPlaneParameters[0] * x) + (self.zPlaneParameters[1] * y) - self.zPlaneParameters[3]) / \
-                       self.zPlaneParameters[2]
-
-            Imheight = sz[0]
-            Imwidth = sz[1]
-
-            def checkRange(val, Max, Min, typ):
-                if (val <= Max and val >= Min) or (val <= Min and val >= Max):
-                    return True
-                print val, ' was out of range between ', Min, ' ', Max, typ
-                return False
-
-            if Imwidth > Imheight:
-                print 'Recognized width is greater than height'
-                lclXMax = self.xZero
-                lclXZero = self.xMax
-                newheight = float(Imheight) / float(Imwidth) * (abs(float(lclXMax) - lclXZero))
-                print newheight, (abs(float(lclXMax) - lclXZero))
-                diff = [self.md[1] + float(newheight / 2), self.md[1] - float(newheight / 2)]
-                lclYZero = min(diff)
-                lclYMax = max(diff)
-            else:
-                print 'Recognized height is greater than width'
-                lclYZero = yZero
-                lclYMax = yMax
-                newwidth = Imwidth / Imheight * (abs(lclYMax - lclYZero))
-                print Imheight, newwidth
-                diff = [md[0] + float(newwidth / 2), md[0] - float(newwidth / 2)]
-                lclXMax = max(diff)
-                lclXZero = min(diff)
-                # gray = np.rot90(gray,2)'''
-
-            lclImRatio = float(float(Imheight) / float(Imwidth))
-            print 'Image Details:h.w = ', lclImRatio, Imheight, Imwidth, '----', float(lclYMax - lclYZero) / float(
-                lclXMax - lclXZero)
-            '''if abs(float(lclYMax - lclYZero)/float(lclXMax - lclXZero))!= lclImRatio:
-                print (float(lclYMax) - float(lclYZero))/(float(lclXMax) - float(lclXZero)),'---', lclImRatio
-                print 'lyMax',' --- ',lclYMax
-                print 'lyZero', ' --- ', lclYZero
-                print 'lxMax', ' --- ', lclXMax
-                print 'lxZero', ' --- ', lclXZero
-                print 'yMax', ' --- ', yMax
-                print 'yZero', ' --- ', yZero
-                print 'xMax', ' --- ', xMax
-                print 'xZero', ' --- ', xZero
-                raise ValueError('Ratio Off')'''
-            print lclXMax, lclXZero, lclYMax, lclYZero, sz[0]
-            # print 'xMax_lcl_real', lclXMax, xMax
-            # print 'yMax_lcl_real', lclYMax, yMax
-            # print 'xZro_lcl_real', lclXZero, xZero
-            # print 'yZro_lcl_real', lclYZero, yZero
-            ptlst = []
-            a = float(lclXMax) - float(lclXZero)
-            d = float(lclYMax) - float(lclYZero)
-            for each in input:
-                # X,Y = self.transposeOrientation(each[0],each[1])
-                b = float(each[0]) / float(sz[1])
-                c = float(a) * float(b)
-                e = float(each[1]) / float(sz[0])
-                f = float(e) * float(d)
-                x = c + float(lclXZero)
-                y = f + float(lclYZero)
-                ptlst.append([x, y, DetermineZ(x, y), self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
-                print x, y
-                if not checkRange(x, lclXZero, lclXMax, ' for X') or not checkRange(y, lclYZero, lclYMax, ' for Y'):
-                    raise ValueError('Range Error')
-            return ptlst
         def DrawContour(pts):
             self.ExecuteSingleMotionWithInterrupt(
                 [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
@@ -123,27 +126,28 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
             return
 
         lines = ContourExtraction.ImageContoursCustomSet1(image)
+        print lines
         for y in lines:
-            pts = convertToTDspaceList(y, [image.shape[0], image.shape[1]])
+            pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
             DrawContour(pts)
         print 'Completed Contour Construction'
         self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
 
     def printAniPose(self):
-        animationPose = rob.getl()
+        animationPose = self.rob.getl()
         #get x difference from md
-        animationPose[0] = (md[0]-animationPose[0])
+        animationPose[0] = (self.md[0]-animationPose[0])
         #get y difference from md
-        animationPose[1] = (md[1]-animationPose[1])
+        animationPose[1] = (self.md[1]-animationPose[1])
         #get z difference from md
-        animationPose[2] = (zDraw-animationPose[2])
+        animationPose[2] = (self.zDraw-animationPose[2])
         print animationPose
         return
 
     def FindAnimations(self,Tag):
         aniTag = []
-        for i in Animations:
+        for i in self.Animations:
             if str(i[0]).__contains__(Tag):
                 aniTag.append(i)
 
@@ -154,42 +158,47 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
             return aniTag[0][0]
         return aniTag[random.randint(0,len(aniTag)-1)][0]
 
+    def ReturnToInit(self):
+        self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+        return
+
     def ExecuteAnimationSingular(self,animationName):
-        def translateToDifferential(pt):
-            newpt = [pt[0], pt[1], pt[2], pt[3], pt[4], pt[5]]
-            if self.initHoverPos[0] > 1:
-                if self.initHoverPos[1] < 1:
-                    # 90
-                    newpt[1] = self.md[0] + (pt[0])
-                    newpt[0] = self.md[1] + (pt[1])
-                    newpt[2] = self.zDraw + abs(pt[2])
-                else:
-                    # 0
-                    newpt[0] = self.md[0] + (pt[0])
-                    newpt[1] = self.md[1] + (pt[1])
-                    newpt[2] = self.zDraw + abs(pt[2])
-            else:
-                if self.initHoverPos[1] < 1:
-                    # 180
-                    newpt[0] = self.md[0] + (pt[0] * -1)
-                    newpt[1] = self.md[1] + (pt[1] * -1)
-                    newpt[2] = self.zDraw + abs(pt[2])
-                else:
-                    # 270
-                    newpt[1] = self.md[0] + (pt[0] * -1)
-                    newpt[0] = self.md[1] + (pt[1] * -1)
-                    newpt[2] = self.zDraw + abs(pt[2])
-            return newpt
         executeble =  [i for i in self.Animations if i[0] == animationName]
         for e in executeble[0][1]:
             if e[0]!='delay' and e[0]!='Description':
-                self.ExecuteSingleMotionWithInterrupt(translateToDifferential(e))
+                self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(e))
             elif e[0]=='delay':
                 print 'Delaying For ',e[1]
                 time.sleep(float(e[1]))
             elif e[0]=='Description':
                 print e[1]
-            return
+        return
+
+    def translateToDifferential(self,pt):
+        newpt = [pt[0], pt[1], pt[2], pt[3], pt[4], pt[5]]
+        if self.initHoverPos[0] > 1:
+            if self.initHoverPos[1] < 1:
+                # 90
+                newpt[1] = self.md[0] + (pt[0])
+                newpt[0] = self.md[1] + (pt[1])
+                newpt[2] = self.zDraw + abs(pt[2])
+            else:
+                # 0
+                newpt[0] = self.md[0] + (pt[0])
+                newpt[1] = self.md[1] + (pt[1])
+                newpt[2] = self.zDraw + abs(pt[2])
+        else:
+            if self.initHoverPos[1] < 1:
+                # 180
+                newpt[0] = self.md[0] + (pt[0] * -1)
+                newpt[1] = self.md[1] + (pt[1] * -1)
+                newpt[2] = self.zDraw + abs(pt[2])
+            else:
+                # 270
+                newpt[1] = self.md[0] + (pt[0] * -1)
+                newpt[0] = self.md[1] + (pt[1] * -1)
+                newpt[2] = self.zDraw + abs(pt[2])
+        return newpt
 
     def resetPos(self):
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)

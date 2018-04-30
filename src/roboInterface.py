@@ -25,9 +25,20 @@ def ExecuteCommand(data):
     elif Command == 'BeginSocialRoutine' or (robotParamters.RunningSocialAction==True and Command[0]!='q'):
         robotParamters.CalledSocialAction()
     elif Command[0] == 'i':
-        robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+        print Command[3:]
+        #robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+        robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
     elif Command[0]=='A':
         robotParamters.ExecuteAnimationSingular(Command[2:])
+    elif Command[0]=='r':
+        robotParamters.ReturnToInit()
+    elif Command=='S':
+        robotParamters.stopRobotInMotion()
+    elif Command=='V':
+        robotParamters.printMovementVariables()
+    elif Command[:6]=='SetPar':
+        par = Command.split(',')
+        robotParamters.setMovementVariables(float(par[1]),float(par[2]))
     else:
         print 'Invalid Command Sent'
     return

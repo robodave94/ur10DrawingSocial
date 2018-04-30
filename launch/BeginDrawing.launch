@@ -34,9 +34,9 @@
 <param name="speedParameters" type="double" value="0.2" />
 <param name="roboIP" type="str" value="10.0.0.157" />
 
-<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="gnome-terminal --command"/>
-<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="gnome-terminal --command"/>
-<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="gnome-terminal --command"/>
+<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
+<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="xterm -e"/>
+<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
 
 
 </launch>

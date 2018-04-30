@@ -9,8 +9,8 @@ class RobotResearchObject (object):
         self.a = rospy.get_param('speedParameters')
         self.v = rospy.get_param('speedParameters')
         self.rob = urx.Robot(rospy.get_param('roboIP'))
-        self.interuptExec = False
         self.Interruption = False
+        self.InteruptedPosition = self.rob.getl()
         self.secmon = ursecmon.SecondaryMonitor(self.rob.host)
         return
 
@@ -23,8 +23,10 @@ class RobotResearchObject (object):
         strparam = stringInput.split(',')
         if strparam[0] == 'Collision':
             self.Interruption = True
-            self.InteruptVector = np.array([float(strparam[1][1:]),float(strparam[2]),float(strparam[2][:-1])])
+            self.InteruptVector = np.array([float(strparam[1][1:]),float(strparam[2]),float(strparam[3][:-1])])
+            print self.InteruptVector
         return
+
     def setFreeDriveFalse(self):
         self.rob.set_freedrive(False)
         return
@@ -35,8 +37,11 @@ class RobotResearchObject (object):
 
     def DelayWhileExecuting(self):
         time.sleep(0.25)
-        while self.rob.is_program_running() and not self.interuptExec:
+        while self.rob.is_program_running() and not self.Interruption:
             time.sleep(0.01)
+        if self.Interruption:
+            self.InteruptedPosition = self.rob.getl()
+            self.stopRobotInMotion()
         return
 
     def ExecuteMultiMotionWait(self,pts):
@@ -64,7 +69,8 @@ class RobotResearchObject (object):
         return
 
     def stopRobotInMotion(self):
-        self.rob.stopl()
+        self.rob.stopl(acc=self.a)
+        self.Interruption=False
         return
 
     def printMovementVariables(self):
