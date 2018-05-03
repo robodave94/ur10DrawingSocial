@@ -215,7 +215,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
 
 
     #endregion
-    def Calibrate(self):
+    def Calibrate(self,cmdCal=False):
         def setMax_Min(btmLft, btmRht, TpLft, TpRht):
             def SetZvals(zD):
                 self.zDraw = zD
@@ -326,7 +326,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
 
             self.zPlaneParameters = [a, b, c, d]
             return
-        if rospy.get_param('AutoCalibrate'):
+        if rospy.get_param('AutoCalibrate') and cmdCal==False:
             GetAutoParam()
         else:
             self.rob.set_freedrive(True)

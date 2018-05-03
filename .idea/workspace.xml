@@ -4,7 +4,6 @@
     <list default="true" id="6a33e834-a862-4593-ae5b-7ab81f9621ae" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/BeginDrawing.launch" afterPath="$PROJECT_DIR$/launch/BeginDrawing.launch" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ContourExtraction.py" afterPath="$PROJECT_DIR$/src/ContourExtraction.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DN_LIB.py" afterPath="$PROJECT_DIR$/src/DN_LIB.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RobotObj.py" afterPath="$PROJECT_DIR$/src/RobotObj.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/roboInterface.py" afterPath="$PROJECT_DIR$/src/roboInterface.py" />
@@ -18,69 +17,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RobotObj.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="72" column="31" lean-forward="true" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DN_LIB.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/DN_LIB.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="141" column="56" lean-forward="true" selection-start-line="141" selection-start-column="56" selection-end-line="141" selection-end-column="56" />
-              <folding>
-                <element signature="e#12#24#0" expanded="true" />
-                <element signature="e#3203#3772#1" expanded="false" />
-                <element signature="e#3839#3877#0" expanded="false" />
-                <element signature="e#6562#7000#0" expanded="false" />
-                <element signature="e#7052#7985#0" expanded="false" />
-                <element signature="e#8019#8090#0" expanded="false" />
-                <element signature="e#8165#8342#0" expanded="false" />
-                <element signature="e#8393#15208#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContourExtraction.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="roboInterface.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="29" column="134" lean-forward="true" selection-start-line="29" selection-start-column="134" selection-end-line="29" selection-end-column="134" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DrawingCmd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -109,6 +46,10 @@
       <find>pri</find>
       <find>stop</find>
       <find>Contour</find>
+      <find>open</find>
+      <find>calibra</find>
+      <find>GetAutoParam</find>
+      <find>rese</find>
     </findStrings>
     <replaceStrings>
       <replace>self.ExecuteAnimationSingular</replace>
@@ -129,19 +70,19 @@
         <option value="$PROJECT_DIR$/roboInterface.py" />
         <option value="$PROJECT_DIR$/launch/BeginDrawing.launch" />
         <option value="$PROJECT_DIR$/src/SocialRoutineAddon.py" />
-        <option value="$PROJECT_DIR$/src/RobotObj.py" />
         <option value="$PROJECT_DIR$/src/DrawingCmd.py" />
-        <option value="$PROJECT_DIR$/src/roboInterface.py" />
         <option value="$PROJECT_DIR$/src/ContourExtraction.py" />
+        <option value="$PROJECT_DIR$/src/RobotObj.py" />
         <option value="$PROJECT_DIR$/src/DN_LIB.py" />
+        <option value="$PROJECT_DIR$/src/roboInterface.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="x" value="64" />
+    <option name="y" value="-11" />
+    <option name="width" value="1857" />
+    <option name="height" value="1092" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -159,8 +100,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -213,6 +152,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,12 +298,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15579514" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843652" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282365" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2899288" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -376,6 +316,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843652" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -409,6 +350,104 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/DN_LIB.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6192">
+          <caret line="344" column="60" lean-forward="true" selection-start-line="344" selection-start-column="60" selection-end-line="344" selection-end-column="60" />
+          <folding>
+            <element signature="e#12#24#0" expanded="true" />
+            <element signature="e#3203#3772#1" expanded="false" />
+            <element signature="e#3839#3877#0" expanded="false" />
+            <element signature="e#6562#7000#0" expanded="false" />
+            <element signature="e#7052#7985#0" expanded="false" />
+            <element signature="e#8019#8090#0" expanded="false" />
+            <element signature="e#8165#8342#0" expanded="false" />
+            <element signature="e#8464#9753#0" expanded="false" />
+            <element signature="e#9796#9859#0" expanded="false" />
+            <element signature="e#9900#10746#0" expanded="false" />
+            <element signature="e#10841#12732#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="72" column="31" lean-forward="true" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="29" column="134" lean-forward="true" selection-start-line="29" selection-start-column="134" selection-end-line="29" selection-end-column="134" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DN_LIB.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2268">
+          <caret line="141" column="56" lean-forward="true" selection-start-line="141" selection-start-column="56" selection-end-line="141" selection-end-column="56" />
+          <folding>
+            <element signature="e#12#24#0" expanded="true" />
+            <element signature="e#3203#3772#1" expanded="false" />
+            <element signature="e#3839#3877#0" expanded="false" />
+            <element signature="e#6562#7000#0" expanded="false" />
+            <element signature="e#7052#7985#0" expanded="false" />
+            <element signature="e#8019#8090#0" expanded="false" />
+            <element signature="e#8165#8342#0" expanded="false" />
+            <element signature="e#8464#9753#0" expanded="false" />
+            <element signature="e#9796#9859#0" expanded="false" />
+            <element signature="e#9900#10746#0" expanded="false" />
+            <element signature="e#10841#12732#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -431,7 +470,10 @@
             <element signature="e#7052#7985#0" expanded="false" />
             <element signature="e#8019#8090#0" expanded="false" />
             <element signature="e#8165#8342#0" expanded="false" />
-            <element signature="e#8393#15208#0" expanded="false" />
+            <element signature="e#8464#9753#0" expanded="false" />
+            <element signature="e#9796#9859#0" expanded="false" />
+            <element signature="e#9900#10746#0" expanded="false" />
+            <element signature="e#10841#12732#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -629,7 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-126">
           <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -637,7 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="57" column="60" lean-forward="true" selection-start-line="57" selection-start-column="60" selection-end-line="57" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -645,33 +685,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="19" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="76" column="14" lean-forward="true" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="29" column="134" lean-forward="true" selection-start-line="29" selection-start-column="134" selection-end-line="29" selection-end-column="134" />
+        <state relative-caret-position="618">
+          <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="72" column="31" lean-forward="true" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -685,8 +724,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DN_LIB.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="141" column="56" lean-forward="true" selection-start-line="141" selection-start-column="56" selection-end-line="141" selection-end-column="56" />
+        <state relative-caret-position="406">
+          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="27" />
           <folding>
             <element signature="e#12#24#0" expanded="true" />
             <element signature="e#3203#3772#1" expanded="false" />
@@ -695,7 +734,10 @@
             <element signature="e#7052#7985#0" expanded="false" />
             <element signature="e#8019#8090#0" expanded="false" />
             <element signature="e#8165#8342#0" expanded="false" />
-            <element signature="e#8393#15208#0" expanded="false" />
+            <element signature="e#8464#9753#0" expanded="false" />
+            <element signature="e#9796#9859#0" expanded="false" />
+            <element signature="e#9900#10746#0" expanded="false" />
+            <element signature="e#10841#12732#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -68,6 +68,14 @@ class RobotResearchObject (object):
         exit()
         return
 
+    def OpenGripper(self):
+        self.rob.move_RG2gripper(110)
+        return
+
+    def CloseGripper(self):
+        self.rob.move_RG2gripper(0)
+        return
+
     def stopRobotInMotion(self):
         self.rob.stopl(acc=self.a)
         self.Interruption=False

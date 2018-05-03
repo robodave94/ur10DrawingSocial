@@ -17,7 +17,7 @@ def ExecuteCommand(data):
     print data
     #parseCommand
     if Command == 'cal':
-        robotParamters.Calibrate()
+        robotParamters.Calibrate(cmdCal=True)
     elif Command == 'o':
         robotParamters.printAniPose()
     elif robotParamters.RunningSocialAction==True and Command[0]=='q':
@@ -26,8 +26,8 @@ def ExecuteCommand(data):
         robotParamters.CalledSocialAction()
     elif Command[0] == 'i':
         print Command[3:]
-        #robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
-        robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
+        robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+        #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
     elif Command[0]=='A':
         robotParamters.ExecuteAnimationSingular(Command[2:])
     elif Command[0]=='r':
@@ -39,6 +39,12 @@ def ExecuteCommand(data):
     elif Command[:6]=='SetPar':
         par = Command.split(',')
         robotParamters.setMovementVariables(float(par[1]),float(par[2]))
+    elif Command=='CloseGrip':
+        robotParamters.CloseGripper()
+    elif Command == 'OpenGrip':
+        robotParamters.OpenGripper()
+    elif Command == 'ReAn':
+        robotParamters.ResetAnimation()
     else:
         print 'Invalid Command Sent'
     return
