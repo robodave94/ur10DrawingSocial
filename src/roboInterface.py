@@ -13,40 +13,48 @@ def AnaylseInterupt(data):
     return
 
 def ExecuteCommand(data):
-    Command =  data.data
+    Command = data.data
     print data
-    #parseCommand
-    if Command == 'cal':
-        robotParamters.Calibrate(cmdCal=True)
-    elif Command == 'o':
-        robotParamters.printAniPose()
-    elif robotParamters.RunningSocialAction==True and Command[0]=='q':
-        robotParamters.CancelSocialRoutine()
-    elif Command == 'BeginSocialRoutine' or (robotParamters.RunningSocialAction==True and Command[0]!='q'):
-        robotParamters.CalledSocialAction()
-    elif Command[0] == 'i':
-        print Command[3:]
-        robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
-        #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
-    elif Command[0]=='A':
-        robotParamters.ExecuteAnimationSingular(Command[2:])
-    elif Command[0]=='r':
-        robotParamters.ReturnToInit()
-    elif Command=='S':
-        robotParamters.stopRobotInMotion()
-    elif Command=='V':
-        robotParamters.printMovementVariables()
-    elif Command[:6]=='SetPar':
-        par = Command.split(',')
-        robotParamters.setMovementVariables(float(par[1]),float(par[2]))
-    elif Command=='CloseGrip':
-        robotParamters.CloseGripper()
-    elif Command == 'OpenGrip':
-        robotParamters.OpenGripper()
-    elif Command == 'ReAn':
-        robotParamters.ResetAnimation()
+    #if social routine is not running
+    if robotParamters.RunningSocialAction == False:
+        if Command == 'cal':
+            robotParamters.Calibrate(cmdCal=True)
+        elif Command == 'o':
+            robotParamters.printAniPose()
+        elif robotParamters.RunningSocialAction==True and Command[0]=='q':
+            robotParamters.CancelSocialRoutine()
+        elif Command == 'BeginSocialRoutine':
+            robotParamters.InitSocRoutine()
+        elif Command[0] == 'i':
+            robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+            #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
+        elif Command[0]=='A':
+            robotParamters.ExecuteAnimationSingular(Command[2:])
+        elif Command[0]=='r':
+            robotParamters.ReturnToInit()
+        #elif Command=='S':
+        #    robotParamters.stopRobotInMotion()
+        elif Command=='V':
+            robotParamters.PrintAllVar()
+        elif Command[:6]=='SetPar':
+            par = Command.split(',')
+            robotParamters.setMovementVariables(float(par[1]),float(par[2]))
+        elif Command=='CloseGrip':
+            robotParamters.CloseGripper()
+        elif Command == 'OpenGrip':
+            robotParamters.OpenGripper()
+        elif Command == 'ReAn':
+            robotParamters.ResetAnimation()
+        else:
+            print 'Invalid Command Sent'
     else:
-        print 'Invalid Command Sent'
+        if Command=='Q':
+            robotParamters.CancelSocialRoutine()
+        elif Command=='T':
+            robotParamters.CancelSocialRoutine()
+
+        else:
+            print 'Invalid Command Sent'
     return
 
 

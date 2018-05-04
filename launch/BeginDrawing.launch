@@ -29,7 +29,7 @@
 [-0.818824753926981, -0.37124690934772825, -0.14593427107081242, 0.4139132599780484, 3.08629307289802, -0.16402398369383053]]
 </rosparam>
 
-<param name="AutoCalibrate" type="bool" value="False" />
+<param name="AutoCalibrate" type="bool" value="True" />
 <param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
 <param name="ImagesPath" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/" />
 <param name="speedParameters" type="double" value="0.2" />

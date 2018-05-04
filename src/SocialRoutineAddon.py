@@ -3,15 +3,6 @@ import random
 import rospy,os,cv2
 from std_msgs.msg import String
 class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
-    class bcolors:
-        HEADER = '\033[95m'
-        OKBLUE = '\033[94m'
-        OKGREEN = '\033[92m'
-        WARNING = '\033[93m'
-        FAIL = '\033[91m'
-        ENDC = '\033[0m'
-        BOLD = '\033[1m'
-        UNDERLINE = '\033[4m'
 
     def InitSocialRoutineSettings(self):
         self.pub = rospy.Publisher('SocialReturnValues', String, queue_size=10)
@@ -37,66 +28,15 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.RunningSocialAction = False
         self.pub.publish("Cancelling Social Routine")
         self.Step=0
-        self.ExecuteAnimationSingular(self.initHoverPos)
+        self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         return
 
-    def CalledSocialAction(self):
-        if self.RunningSocialAction==False:
-            #BeginActiveSocialRoutine
-            self.RunningSocialAction=True
-        else:
-            self.Step+=1
-        self.pub.publish("Executing Action "+self.StepsTaken[self.Step])
-        self.actionDeterminant(self.Step)
+    def InitSocRoutine(self):
+        self.RunningSocialAction=True
+        self.pub.publish('Social Routine Activated')
         return
 
-    def actionDeterminant(self,step):
-        if step==0:
-            self.ExtractDrawing()
-            print 'Got Drawing'
-            self.LoopActive = True
-            self.ExecuteAnimationSingular(self.initHoverPos)
-            self.RunContinousSocialAction('idle')
-        elif step==1:
-            print self.bcolors.WARNING + 'Completed idle, Running greeting' + self.bcolors.ENDC
-            self.LoopActive = True
-            self.SocialAction('Greeting')
-            self.Step += 1
-            print self.bcolors.WARNING + 'Completed greeting, Running First Drawing' +self.bcolors.ENDC
-            # run first set of drawing Points
-            self.SocialAction('ExecuteDrawing')
-            self.Step += 1
-            print self.bcolors.WARNING + 'Completed First Drawing, Running Contemplate animation' +self.bcolors.ENDC
-            self.SocialAction('ContemplateAnimation')
-            self.Step += 1
-            print self.bcolors.WARNING + 'Completed comptempation, Running Second Drawing' +self.bcolors.ENDC
-            self.SocialAction('ExecuteDrawing', sInd=1)
-            self.Step += 1
-            print self.bcolors.WARNING + 'Now encouraging user to draw' +self.bcolors.ENDC
-            self.RunContinousSocialAction('EncourageDrawing')
-            print self.bcolors.WARNING + 'Now observing user draw' +self.bcolors.ENDC
-        elif step == 6:
-            self.LoopActive = True
-            self.RunContinousSocialAction('ObserveUser')
-        elif step==7:
-            # sigining
-            print self.bcolors.WARNING + 'User has finished drawing now signing' +self.bcolors.ENDC
-            self.LoopActive = True
-            self.RunDrawing(cv2.imread(os.path.join('robot_img_v2/', 'robosign.png')))
-            self.Step += 1
-            print self.bcolors.WARNING + 'Now encourage user to draw' +self.bcolors.ENDC
-            self.LoopActive = True
-            self.RunContinousSocialAction('EncourageSigining')
-        elif step==9:
-            print self.bcolors.WARNING + 'Observing user signing' +self.bcolors.ENDC
-            self.LoopActive = True
-            self.RunContinousSocialAction('ObserveUserSigning')
-        elif step == 10:
-            print self.bcolors.WARNING + 'Waving goodbye' +self.bcolors.ENDC
-            self.LoopActive = True
-            self.RunContinousSocialAction('GoodBye')
-            self.step=0
-        return
+
     
     def ExtractDrawing(self):
         import glob, cv2
@@ -108,7 +48,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                      cv2.imread(str(listImgFiles[index]) + '_2.png')]
         return
 
-    def SocialAction(self,activity, sInd=0):
+    '''def SocialAction(self,activity, sInd=0):
         if activity == 'ExecuteDrawing':
             print self.Imgs[sInd]
             self.RunDrawing(self.Imgs[sInd])
@@ -164,5 +104,51 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                 self.ExecuteAnimationSingular(ac)
         return
 
-
+    def actionDeterminant(self,step):
+        if step==0:
+            self.ExtractDrawing()
+            print 'Got Drawing'
+            self.LoopActive = True
+            self.ExecuteAnimationSingular(self.initHoverPos)
+            self.RunContinousSocialAction('idle')
+        elif step==1:
+            print self.bcolors.WARNING + 'Completed idle, Running greeting' + self.bcolors.ENDC
+            self.LoopActive = True
+            self.SocialAction('Greeting')
+            self.Step += 1
+            print self.bcolors.WARNING + 'Completed greeting, Running First Drawing' +self.bcolors.ENDC
+            # run first set of drawing Points
+            self.SocialAction('ExecuteDrawing')
+            self.Step += 1
+            print self.bcolors.WARNING + 'Completed First Drawing, Running Contemplate animation' +self.bcolors.ENDC
+            self.SocialAction('ContemplateAnimation')
+            self.Step += 1
+            print self.bcolors.WARNING + 'Completed comptempation, Running Second Drawing' +self.bcolors.ENDC
+            self.SocialAction('ExecuteDrawing', sInd=1)
+            self.Step += 1
+            print self.bcolors.WARNING + 'Now encouraging user to draw' +self.bcolors.ENDC
+            self.RunContinousSocialAction('EncourageDrawing')
+            print self.bcolors.WARNING + 'Now observing user draw' +self.bcolors.ENDC
+        elif step == 6:
+            self.LoopActive = True
+            self.RunContinousSocialAction('ObserveUser')
+        elif step==7:
+            # sigining
+            print self.bcolors.WARNING + 'User has finished drawing now signing' +self.bcolors.ENDC
+            self.LoopActive = True
+            self.RunDrawing(cv2.imread(os.path.join('robot_img_v2/', 'robosign.png')))
+            self.Step += 1
+            print self.bcolors.WARNING + 'Now encourage user to draw' +self.bcolors.ENDC
+            self.LoopActive = True
+            self.RunContinousSocialAction('EncourageSigining')
+        elif step==9:
+            print self.bcolors.WARNING + 'Observing user signing' +self.bcolors.ENDC
+            self.LoopActive = True
+            self.RunContinousSocialAction('ObserveUserSigning')
+        elif step == 10:
+            print self.bcolors.WARNING + 'Waving goodbye' +self.bcolors.ENDC
+            self.LoopActive = True
+            self.RunContinousSocialAction('GoodBye')
+            self.step=0
+        return'''
 
