@@ -1,21 +1,12 @@
 #import urx
 import rospy
-import ContourExtraction
 import numpy as np
-import cv2
 import math
-#from sklearn import cluster
-#from Tkinter import *
 import csv
-#import scipy.linalg
-#from mpl_toolkits.mplot3d import Axes3D
-#import matplotlib.pyplot as plt
 import time
-#import threading
 import random
-#import sys,os
 import RobotObj
-#region variables Accessors
+
 class DrawingRobotStructure(RobotObj.RobotResearchObject):
 
     def InitializeVariablesROS(self):
@@ -138,24 +129,6 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
                 raise ValueError('Range Error')
         return ptlst
 
-    def RunDrawing(self,image):
-        def DrawContour(pts):
-            self.ExecuteSingleMotionWithInterrupt(
-                [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
-            self.ExecuteMultiMotionWithInterrupt(pts)
-            self.ExecuteSingleMotionWithInterrupt(
-                [pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
-            return
-
-        lines = ContourExtraction.ImageContoursCustomSet1(image)
-        print lines
-        for y in lines:
-            pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
-            DrawContour(pts)
-        print 'Completed Contour Construction'
-        self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
-        return
-
     def printAniPose(self):
         animationPose = self.rob.getl()
         #get x difference from md
@@ -184,16 +157,33 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         return
 
-    def ExecuteAnimationSingular(self,animationName):
-        executeble =  [i for i in self.Animations if i[0] == animationName]
+    '''
+    Unexpected results... DO NOT USE
+    def CompileAndRunAnAnimationDirectSocket(self, animationName):
+        executable=[i for i in self.Animations if i[0] == animationName]
+        strprog = "def RunAnimation():\n"
+        for e in executable[0][1]:
+            if e[0] != 'delay' and e[0] != 'Description':
+                strprog += '    movel('+str(self.translateToDifferential(e))+',a='+str(self.a)+',v='+str(self.v)+')\n'
+            elif e[0] == 'delay':
+                strprog += '    sleep('+ e[1]+')\n'
+            elif e[0] == 'Description':
+                print e[1]
+        strprog += "end"
+        self.rob.send_program(strprog)
+
+        return'''
+
+    def ExecuteAnimationSingular(self, animationName):
+        executeble = [i for i in self.Animations if i[0] == animationName]
         for e in executeble[0][1]:
-            if e[0]!='delay' and e[0]!='Description':
+            if e[0] != 'delay' and e[0] != 'Description':
                 self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(e))
-                print 'robPos: ',self.rob.getl()
-            elif e[0]=='delay':
-                print 'Delaying For ',e[1]
+                print 'robPos: ', self.rob.getl()
+            elif e[0] == 'delay':
+                print 'Delaying For ', e[1]
                 time.sleep(float(e[1]))
-            elif e[0]=='Description':
+            elif e[0] == 'Description':
                 print e[1]
         return
 

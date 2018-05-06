@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import threading
 import SocialRoutineAddon
 import logging
 import cv2
@@ -12,18 +13,20 @@ def AnaylseInterupt(data):
     robotParamters.DetectedInteruptSig(data.data)
     return
 
+
+
 def ExecuteCommand(data):
     Command = data.data
-    print data
+    print 'Registered Command'
     #if social routine is not running
-    if robotParamters.RunningSocialAction == False:
+    if Command != '':
         if Command == 'cal':
             robotParamters.Calibrate(cmdCal=True)
         elif Command == 'o':
             robotParamters.printAniPose()
         elif robotParamters.RunningSocialAction==True and Command[0]=='q':
             robotParamters.CancelSocialRoutine()
-        elif Command == 'BeginSocialRoutine':
+        elif Command == 'BSR':
             robotParamters.InitSocRoutine()
         elif Command[0] == 'i':
             robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
@@ -32,8 +35,6 @@ def ExecuteCommand(data):
             robotParamters.ExecuteAnimationSingular(Command[2:])
         elif Command[0]=='r':
             robotParamters.ReturnToInit()
-        #elif Command=='S':
-        #    robotParamters.stopRobotInMotion()
         elif Command=='V':
             robotParamters.PrintAllVar()
         elif Command[:6]=='SetPar':
@@ -45,16 +46,45 @@ def ExecuteCommand(data):
             robotParamters.OpenGripper()
         elif Command == 'ReAn':
             robotParamters.ResetAnimation()
+        elif Command=='Obs':
+            #continouslyDraw
+            robotParamters.ContinouslyWaitState('Observe')
+        elif Command=='Nod':
+            #continouslyNod
+            robotParamters.ContinouslyWaitState('NodAtUser')
+        elif Command=='Pse':
+            #Move to withdraw and wait
+            robotParamters.ContinouslyWaitState('WithdrawPose')
+        elif Command == '1':
+            #Point at cup
+            robotParamters.PointAtCup()
+        elif Command == '2':
+            #Point at paper
+            robotParamters.PointAtPaper()
+        elif Command == '3':
+            #pointAtClips
+            robotParamters.PointAtClips()
+        elif Command == '4':
+            #Point at signature line
+            robotParamters.PointAtSigLine()
+        elif Command == '5':
+            #Point at sign art
+            robotParamters.SignArt()
+        elif Command == '6':
+            #Say goodbye
+            robotParamters.Goodbye()
         else:
             print 'Invalid Command Sent'
     else:
-        if Command=='Q':
-            robotParamters.CancelSocialRoutine()
-        elif Command=='T':
-            robotParamters.CancelSocialRoutine()
+        print 'No Command Sent'
+    return
 
-        else:
-            print 'Invalid Command Sent'
+#this subscriber will overwrite the
+def OverwriteCommand(data):
+    if data.data=='FinishIdle':
+        robotParamters.SetIdleOFF()
+    elif data.data=='Q':
+        robotParamters.CancelSocialRoutine()
     return
 
 
@@ -69,6 +99,7 @@ def RobotBegin():
     rospy.init_node('ur10ArtInterface', anonymous=True)
     rospy.Subscriber("visionCollisionDetection", String, AnaylseInterupt)
     rospy.Subscriber("socialCmd", String, ExecuteCommand)
+    rospy.Subscriber("OverwrittingSubscrier",String, OverwriteCommand)
     rospy.spin()
 
 if __name__ == '__main__':

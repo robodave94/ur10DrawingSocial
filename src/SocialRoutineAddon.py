@@ -1,14 +1,19 @@
 import DN_LIB
+import rospy
+import ContourExtraction
+import os
+import time
 import random
-import rospy,os,cv2
 from std_msgs.msg import String
 class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
     def InitSocialRoutineSettings(self):
+        #first node pose higher one
         self.pub = rospy.Publisher('SocialReturnValues', String, queue_size=10)
-        self.Step=0
+        self.ImageIndex=0
+        self.StateOfWait=False
         self.StepsTaken=[
-            'idle',
+            'Idle',
             'Greeting',
             'ExecuteDrawing',
             'ContemplateAnimation',
@@ -21,34 +26,29 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             'GoodBye'
         ]
         self.RunningSocialAction=False
+        self.IdleCon=False
         self.InitializeVariablesROS()
+        self.withdrawPose = rospy.get_param('WithdrawPose')
+        self.NodPose = rospy.get_param('NodDifferentials')
         return
 
     def CancelSocialRoutine(self):
+        self.Interruption=True
         self.RunningSocialAction = False
+        self.IdleCon=False
         self.pub.publish("Cancelling Social Routine")
-        self.Step=0
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         return
+
+
 
     def InitSocRoutine(self):
         self.RunningSocialAction=True
         self.pub.publish('Social Routine Activated')
+        self.RunArtSequence()
         return
 
-
-    
-    def ExtractDrawing(self):
-        import glob, cv2
-        listImgFiles = []
-        for file in glob.glob(os.path.join(rospy.get_param('ImagesPath'), '*_1.png')):
-            listImgFiles.append(file[:-6])
-        index = random.randint(0, len(listImgFiles) - 1)
-        self.Imgs = [cv2.imread(str(listImgFiles[index]) + '_1.png'),
-                     cv2.imread(str(listImgFiles[index]) + '_2.png')]
-        return
-
-    '''def SocialAction(self,activity, sInd=0):
+    def SocialAction(self, activity, sInd=0):
         if activity == 'ExecuteDrawing':
             print self.Imgs[sInd]
             self.RunDrawing(self.Imgs[sInd])
@@ -61,6 +61,133 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             ac = self.FindAnimations('Contemplate')
             self.ExecuteAnimationSingular(ac)
         return
+
+    def ContinouslyWaitState(self,action):
+        self.IdleCon=True
+        if action=='Observe':
+            while self.IdleCon == True:
+                # running idle animations
+                # find AnimationNAMEwithidletage
+                ac = self.FindAnimations('Observe')
+                self.ExecuteAnimationSingular(ac)
+        elif action=='NodAtUser':
+            while self.IdleCon == True:
+                # running idle animations
+                # find AnimationNAMEwithidletage
+                self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[0]))
+                self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[1]))
+                self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[0]))
+                time.sleep(random.randint(2,5))
+        elif action == 'WithdrawPose':
+            self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.withdrawPose))
+            while self.IdleCon==True:
+                time.sleep(0.01)
+        return
+
+
+
+    def RunDrawing(self,image):
+        def DrawContour(pts):
+            self.ExecuteSingleMotionWithInterrupt(
+                [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            self.ExecuteMultiMotionWithInterrupt(pts)
+            self.ExecuteSingleMotionWithInterrupt(
+                [pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            return
+
+        lines = ContourExtraction.ImageContoursCustomSet1(image)
+        print lines
+        for y in lines:
+            pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
+            DrawContour(pts)
+        print 'Completed Contour Construction'
+        self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
+        return
+
+    def PointAtCup(self):
+        self.ExecuteAnimationSingular('PointAtCup')
+        return
+
+    def PointAtPaper(self):
+        self.ExecuteAnimationSingular('PointAtPaper')
+        return
+
+    def PointAtClips(self):
+        self.ExecuteAnimationSingular('PointAtClips')
+        return
+
+    def PointAtSigLine(self):
+        self.ExecuteAnimationSingular('PointAtSigLine')
+        return
+
+    def SignArt(self):
+        self.ExecuteAnimationSingular('SignArt')
+        return
+
+    def Goodbye(self):
+        self.ExecuteAnimationSingular('Goodbye')
+        return
+
+    def BeginSequenceofDraw(self):
+        # Run Greet, Draw, Comptemplate and Draw
+        pubmsgs=['Completed idle, Running greeting',
+                 'Draw First Image Set',
+                 'Completed First Draw, Now Running Contemplate Animation',
+                 'Completed comptemplation, Running Second Drawing']
+        socialCmds=['Greeting',
+                 'ExecuteDrawing',
+                 'ContemplateAnimation',
+                 'ExecuteDrawing']
+        self.ExtractDrawing()
+        for i in range(0,4):
+            if self.RunningSocialAction == True:
+                print self.RunningSocialAction
+                self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+                self.pub.publish(pubmsgs[i])
+                if i==3:
+                    self.SocialAction(socialCmds[i],sInd=1)
+                    self.pub.publish('Completed Second Drawing')
+                else:
+                    self.SocialAction(socialCmds[i])
+        return
+
+    def SetIdleOFF(self):
+        if self.IdleCon!=False:
+            self.IdleCon=False
+        return
+
+    def RunArtSequence(self):
+        self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+        self.IdleCon=True
+        while self.IdleCon==True:
+            #continously run idle animation
+            ac = self.FindAnimations('Idle')
+            self.ExecuteAnimationSingular(ac)
+            if self.IdleCon==False:
+                break
+            self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+            print self.IdleCon
+        if self.RunningSocialAction==True:
+            self.BeginSequenceofDraw()
+        self.RunningSocialAction=False
+        if self.RunningSocialAction == True:
+            self.pub.publish('Action Draw Completed, control returned to user')
+        else:
+            self.pub.publish('Social routine cancelled, control returned to user')
+        return
+    
+    def ExtractDrawing(self):
+        import glob, cv2
+        listImgFiles = []
+        for file in glob.glob(os.path.join(rospy.get_param('ImagesPath'), '*_1.png')):
+            listImgFiles.append(file[:-6])
+        index = self.ImageIndex
+        self.Imgs = [cv2.imread(str(listImgFiles[index]) + '_1.png'),
+                     cv2.imread(str(listImgFiles[index]) + '_2.png')]
+        index +=1
+        return
+
+    '''
 
     def RunContinousSocialAction(self,Action):
         """ Method that runs forever """

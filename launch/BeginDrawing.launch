@@ -29,6 +29,15 @@
 [-0.818824753926981, -0.37124690934772825, -0.14593427107081242, 0.4139132599780484, 3.08629307289802, -0.16402398369383053]]
 </rosparam>
 
+<rosparam param="NodDifferentials"> 
+[[0.013040620011840143, -0.09207323734652173, -0.7805670947383995, 1.092004162634252, -1.4106272197127374, 1.5709524971042654],
+[0.01811137970328397, -0.11621197940777628, -0.48816933752977043, 1.806137714168595, -1.940253339272449, 0.5686868180546801]]
+</rosparam>
+
+<rosparam param="WithdrawPose"> 
+[0.10289531452998273, -0.3537502847578775, -0.6997784285870847, 1.5036295459032858, -1.7234581095793673, 1.0822197379665612]
+</rosparam>
+
 <param name="AutoCalibrate" type="bool" value="True" />
 <param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
 <param name="ImagesPath" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/" />
