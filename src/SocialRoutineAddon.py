@@ -9,35 +9,15 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
     def InitSocialRoutineSettings(self):
         #first node pose higher one
-        self.pub = rospy.Publisher('SocialReturnValues', String, queue_size=10)
-        self.ImageIndex=0
-        self.StateOfWait=False
-        self.StepsTaken=[
-            'Idle',
-            'Greeting',
-            'ExecuteDrawing',
-            'ContemplateAnimation',
-            'ExecuteDrawing',
-            'EncourageDrawing',
-            'ObserveUserDrawing',
-            'SignDrawing',
-            'EncourageSigining',
-            'ObserveUserSigning',
-            'GoodBye'
-        ]
-        self.RunningSocialAction=False
-        self.IdleCon=False
         self.InitializeVariablesROS()
-        self.withdrawPose = rospy.get_param('WithdrawPose')
-        self.NodPose = rospy.get_param('NodDifferentials')
+        self.WaitingAction = 'NodAtUser'
         return
 
     def CancelSocialRoutine(self):
-        self.Interruption=True
         self.RunningSocialAction = False
         self.IdleCon=False
         self.pub.publish("Cancelling Social Routine")
-        self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+        self.ReturnToInit()
         return
 
 
@@ -62,15 +42,20 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExecuteAnimationSingular(ac)
         return
 
+
     def ContinouslyWaitState(self,action):
         self.IdleCon=True
+        self.RunningSocialAction = True
+        self.pub.publish('RunningWaitState: '+action)
         if action=='Observe':
+            self.WaitingAction = 'Observe'
             while self.IdleCon == True:
                 # running idle animations
                 # find AnimationNAMEwithidletage
                 ac = self.FindAnimations('Observe')
                 self.ExecuteAnimationSingular(ac)
         elif action=='NodAtUser':
+            self.WaitingAction = 'NodAtUser'
             while self.IdleCon == True:
                 # running idle animations
                 # find AnimationNAMEwithidletage
@@ -79,8 +64,9 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                 self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[0]))
                 time.sleep(random.randint(2,5))
         elif action == 'WithdrawPose':
+            self.WaitingAction = 'WithdrawPose'
             self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.withdrawPose))
-            while self.IdleCon==True:
+            while self.IdleCon == True:
                 time.sleep(0.01)
         return
 
@@ -88,45 +74,50 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
     def RunDrawing(self,image):
         def DrawContour(pts):
+            if self.RunningSocialAction==False:
+                return
             self.ExecuteSingleMotionWithInterrupt(
                 [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            if self.RunningSocialAction==False:
+                return
             self.ExecuteMultiMotionWithInterrupt(pts)
+            if self.RunningSocialAction==False:
+                return
             self.ExecuteSingleMotionWithInterrupt(
                 [pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            if self.RunningSocialAction==False:
+                return
             return
 
         lines = ContourExtraction.ImageContoursCustomSet1(image)
         print lines
         for y in lines:
             pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
+            if self.RunningSocialAction==False:
+                return
             DrawContour(pts)
         print 'Completed Contour Construction'
         self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
 
-    def PointAtCup(self):
-        self.ExecuteAnimationSingular('PointAtCup')
-        return
-
-    def PointAtPaper(self):
-        self.ExecuteAnimationSingular('PointAtPaper')
-        return
-
-    def PointAtClips(self):
-        self.ExecuteAnimationSingular('PointAtClips')
-        return
-
-    def PointAtSigLine(self):
-        self.ExecuteAnimationSingular('PointAtSigLine')
+    def SingleAction(self,activity):
+        self.IdleCon=True
+        self.RunningSocialAction=True
+        self.pub.publish('RunningSingleAction: '+activity)
+        self.ExecuteAnimationSingular(activity)
+        self.pub.publish('FinishedSingleAction: '+activity)
+        self.ContinouslyWaitState(self.WaitingAction)
         return
 
     def SignArt(self):
-        self.ExecuteAnimationSingular('SignArt')
+        import cv2
+        self.pub.publish('RunningSingleAction: SignArt')
+        print os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')
+        self.RunDrawing(cv2.imread(os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')))
+        self.pub.publish('FinishedSingleAction: SignArt')
+        self.ContinouslyWaitState(self.WaitingAction)
         return
 
-    def Goodbye(self):
-        self.ExecuteAnimationSingular('Goodbye')
-        return
 
     def BeginSequenceofDraw(self):
         # Run Greet, Draw, Comptemplate and Draw
@@ -151,29 +142,30 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                     self.SocialAction(socialCmds[i])
         return
 
-    def SetIdleOFF(self):
+    '''def SetIdleOFF(self):
         if self.IdleCon!=False:
             self.IdleCon=False
-        return
+        return'''
 
     def RunArtSequence(self):
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         self.IdleCon=True
-        while self.IdleCon==True:
+        while self.IdleCon == True:
+            print 'Idle',self.IdleCon
             #continously run idle animation
             ac = self.FindAnimations('Idle')
             self.ExecuteAnimationSingular(ac)
-            if self.IdleCon==False:
+            if self.IdleCon==False or self.RunningSocialAction==False:
                 break
             self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
-            print self.IdleCon
+        self.IdleCon=True
         if self.RunningSocialAction==True:
             self.BeginSequenceofDraw()
-        self.RunningSocialAction=False
         if self.RunningSocialAction == True:
             self.pub.publish('Action Draw Completed, control returned to user')
         else:
             self.pub.publish('Social routine cancelled, control returned to user')
+        self.RunningSocialAction = False
         return
     
     def ExtractDrawing(self):

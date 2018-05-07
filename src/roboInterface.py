@@ -4,6 +4,7 @@ import threading
 import SocialRoutineAddon
 import logging
 import cv2
+import time
 import numpy
 import DN_LIB
 from std_msgs.msg import String
@@ -46,45 +47,49 @@ def ExecuteCommand(data):
             robotParamters.OpenGripper()
         elif Command == 'ReAn':
             robotParamters.ResetAnimation()
-        elif Command=='Obs':
-            #continouslyDraw
-            robotParamters.ContinouslyWaitState('Observe')
-        elif Command=='Nod':
-            #continouslyNod
-            robotParamters.ContinouslyWaitState('NodAtUser')
-        elif Command=='Pse':
-            #Move to withdraw and wait
-            robotParamters.ContinouslyWaitState('WithdrawPose')
         elif Command == '1':
             #Point at cup
-            robotParamters.PointAtCup()
+            robotParamters.SingleAction('PointAtCup')
         elif Command == '2':
             #Point at paper
-            robotParamters.PointAtPaper()
+            robotParamters.SingleAction('PointAtPaper')
         elif Command == '3':
             #pointAtClips
-            robotParamters.PointAtClips()
+            robotParamters.SingleAction('PointAtClips')
         elif Command == '4':
             #Point at signature line
-            robotParamters.PointAtSigLine()
+            robotParamters.SingleAction('PointAtSigLine')
         elif Command == '5':
             #Point at sign art
             robotParamters.SignArt()
         elif Command == '6':
             #Say goodbye
-            robotParamters.Goodbye()
+            robotParamters.SingleAction('Goodbye')
+        elif Command == 'Obs':
+            # continouslyDraw
+            robotParamters.ContinouslyWaitState('Observe')
+        elif Command == 'Nod':
+            # continouslyNod
+            robotParamters.ContinouslyWaitState('NodAtUser')
+        elif Command == 'Pse':
+            # Move to withdraw and wait
+            robotParamters.ContinouslyWaitState('WithdrawPose')
         else:
             print 'Invalid Command Sent'
     else:
         print 'No Command Sent'
     return
 
-#this subscriber will overwrite the
+#this subscriber will overwrite the social commands
 def OverwriteCommand(data):
     if data.data=='FinishIdle':
-        robotParamters.SetIdleOFF()
+        robotParamters.IdleCon = False
+        time.sleep(0.2)
+    #elif data.data=='Interupt':
+    #    robotParamters.Interruption=True
     elif data.data=='Q':
         robotParamters.CancelSocialRoutine()
+
     return
 
 

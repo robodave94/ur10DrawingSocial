@@ -154,6 +154,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
         return aniTag[random.randint(0,len(aniTag)-1)][0]
 
     def ReturnToInit(self):
+
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         return
 
@@ -185,40 +186,9 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
                 time.sleep(float(e[1]))
             elif e[0] == 'Description':
                 print e[1]
+            if self.IdleCon==False or self.RunningSocialAction==False:
+                return
         return
-
-    def translateToDifferential(self,pt):
-        newpt = [pt[0], pt[1], pt[2], pt[3], pt[4], pt[5]]
-        if self.initHoverPos[0] > 1:
-            if self.initHoverPos[1] < 1:
-                # 90
-                print 'Animating To Section 1'
-                newpt[1] = self.md[0] + (pt[0])
-                newpt[0] = self.md[1] + (pt[1])
-                newpt[2] = self.zDraw + abs(pt[2])
-            else:
-                # 0
-                print 'Animating To Section 0'
-                newpt[0] = self.md[0] + (pt[0])
-                newpt[1] = self.md[1] + (pt[1])
-                newpt[2] = self.zDraw + abs(pt[2])
-        else:
-            if self.initHoverPos[1] < 1:
-                # 180
-                print 'Animating To Section 2'
-                newpt[0] = self.md[0] + (pt[0]*-1)
-                newpt[1] = self.md[1] + (pt[1]*-1)
-                newpt[2] = self.zDraw + abs(pt[2])
-            else:
-                # 270
-                print 'Animating To Section 3'
-                newpt[1] = self.md[0] + (pt[0] * -1)
-                newpt[0] = self.md[1] + (pt[1] * -1)
-                newpt[2] = self.zDraw + abs(pt[2])
-        print 'Data from CSV: ', pt
-        print 'The MidPoint is ',self.md,' at height ',self.zDraw
-        print 'New Point: ', newpt
-        return newpt
 
     def resetPos(self):
         self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)

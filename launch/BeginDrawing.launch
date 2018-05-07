@@ -15,11 +15,11 @@
 
 
 <rosparam param="Section2_AutoFill">
-[[0.3007440428811824, -0.7714639974159906, -0.1515992419189547, 2.4343487553365333, -1.9855848438809616, -0.010134909373664142],
-[0.31869642833576445, -1.0580695545786885, -0.16844406709573687, 2.291213581425229, -2.1310377874687716, 0.059599653267355085],
-[-0.16725840305735, -1.0904919028439926, -0.17022968947418948, 1.7615924126789047, -2.5785538746344243, 0.05009451215312043],
-[-0.16773414019008306, -0.8133303783314749, -0.16591114241100863, -1.7374940091127244, 2.543444493613242, 0.1327046240701881],
-]
+[[0.32361340646707215, -0.742543576170331, -0.11015085367912755, 2.4846245229595367, -1.9061647311515244, 0.023797981668063618],
+[0.3325782317827253, -1.0868718548644738, -0.10732220230470162, 2.296320870234788, -2.101723540588589, 0.10689091998614517],
+[-0.188125388380265, -1.1128744089631868, -0.12380943366220512, 1.7510106448057612, -2.570671750286159, 0.06962608745025757],
+[-0.19410561717168096, -0.7690959015977603, -0.1264217745754461, -1.7421573667726824, 2.603186057013696, 0.03399423768347116]]
+
 </rosparam>
 
 <rosparam param="Section3_AutoFill"> 
@@ -38,15 +38,23 @@
 [0.10289531452998273, -0.3537502847578775, -0.6997784285870847, 1.5036295459032858, -1.7234581095793673, 1.0822197379665612]
 </rosparam>
 
+<rosparam param="leftRetreat"> 
+[-0.4674027848787509, -0.47344564484658175, -0.3020315736283644, 2.846451382018769, -1.2879693442564653, 0.10305285229426728]
+</rosparam>
+
+<rosparam param="RightRetreat"> 
+[0.5535976209158624, -0.48982789775225505, -0.26622883152663945, 0.9360179387789933, -2.9862472469635284, -0.011117096130778686]
+</rosparam>
+
 <param name="AutoCalibrate" type="bool" value="True" />
 <param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
 <param name="ImagesPath" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/" />
 <param name="speedParameters" type="double" value="0.2" />
 <param name="roboIP" type="str" value="10.0.0.157" />
 
-<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="gnome-terminal --command"/>
-<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="gnome-terminal --command"/>
-<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="gnome-terminal --command"/>
+<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
+<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="xterm -e"/>
+<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
 
 
 </launch>
