@@ -15,10 +15,10 @@
 
 
 <rosparam param="Section2_AutoFill">
-[[0.32921642210661956, -0.7351770978877895, -0.11162968988826219, -2.5739786777897256, 1.7651109341553615, 0.020119880278822763],
-[0.34745567246769415, -1.1111914098455429, -0.10533548298679332, 2.534044009816756, -1.8396765402663136, 0.04661822730968079],
-[-0.20811340574831383, -1.1442666618880393, -0.11210402425857798, 2.0199274204119155, -2.3918652533091738, 0.03596283733055637],
-[-0.22601877769471437, -0.7661083102525126, -0.119785746405065, -1.8051320078861148, 2.556663885731942, -0.0008620407418130718]]
+[[0.33895048443332626, -0.8281966758514686, -0.12871903750035565, -2.561417267060518, 1.7429622493871408, 0.048979692460283275],
+[0.3491560658362364, -1.1950621491704911, -0.12111370085874436, 2.4778072415627985, -1.7654207394666768, 0.07352714788402391],
+[-0.18467267907046997, -1.2282822490014382, -0.13100624147505155, 2.02833427668931, -2.2710867136028647, 0.14065708089210496],
+[-0.20512931973326282, -0.8704763520578387, -0.13056256981809927, 1.9123023428147645, -2.460332832993806, 0.05956617106258853]]
 
 </rosparam>
 
@@ -52,9 +52,9 @@
 <param name="speedParameters" type="double" value="0.2" />
 <param name="roboIP" type="str" value="10.0.0.157" />
 
-<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="xterm -e"/>
-<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="xterm -e"/>
-<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="xterm -e"/>
+<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="gnome-terminal --command"/>
+<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen" launch-prefix="gnome-terminal --command"/>
+<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="gnome-terminal --command"/>
 
 
 </launch>

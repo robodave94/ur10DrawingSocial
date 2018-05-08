@@ -42,10 +42,10 @@ def JamesContourAlg(img):
     import math,numpy as np
     dist_thresh = 6
 
-    retval, gray = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV)
+    retval, gray = cv2.threshold(cv2.cvtColor(img,cv2.COLOR_BGR2GRAY), 200, 255, cv2.THRESH_BINARY_INV)
 
-    cv2.imshow('',gray)
-    cv2.waitKey(20202002)
+    #cv2.imshow('',gray)
+    #cv2.waitKey(20202002)
     # Code to find contours
     _,cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     lstcont = []

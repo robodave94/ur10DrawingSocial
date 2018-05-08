@@ -95,7 +95,7 @@ def talker():
                 if rwpt == 'Obs' or rwpt == 'Nod' or rwpt == 'Pse' or rwpt == '1' or rwpt == '2' or rwpt == '3' \
                         or rwpt == '4'or rwpt == '5'or rwpt == '6' or rwpt == 'BSR':
                     pubOver.publish('FinishIdle')
-                    time.sleep()
+                    time.sleep(0.1)
                     pub.publish(rwpt)
                 elif rwpt=='q' or rwpt=='Q':
                     pubOver.publish('Q')

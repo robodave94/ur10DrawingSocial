@@ -35,7 +35,11 @@ def ExecuteCommand(data):
             robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
             robotParamters.RunningSocialAction = False
         elif Command[0]=='A':
+            robotParamters.IdleCon=True
+            robotParamters.RunningSocialAction = True
             robotParamters.ExecuteAnimationSingular(Command[2:])
+            robotParamters.IdleCon = False
+            robotParamters.RunningSocialAction = False
         elif Command[0]=='r':
             robotParamters.ReturnToInit()
         elif Command=='V':
