@@ -89,13 +89,14 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                 return
             return
 
-        lines = ContourExtraction.ImageContoursCustomSet1(image)
+        lines = ContourExtraction.JamesContourAlg(image)
         print lines
         for y in lines:
-            pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
-            if self.RunningSocialAction==False:
-                return
-            DrawContour(pts)
+            if len(y)>0:
+                pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
+                if self.RunningSocialAction==False:
+                    return
+                DrawContour(pts)
         print 'Completed Contour Construction'
         self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return

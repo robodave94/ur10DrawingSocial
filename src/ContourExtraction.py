@@ -36,3 +36,36 @@ def ImageContoursCustomSet2(img,isTesting=False):
     return lstcont
 
 #print ImageContoursCustomSet2(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/human_2.png'))
+
+
+def JamesContourAlg(img):
+    import math,numpy as np
+    dist_thresh = 6
+
+    retval, gray = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV)
+
+    cv2.imshow('',gray)
+    cv2.waitKey(20202002)
+    # Code to find contours
+    _,cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    lstcont = []
+    approx = []
+
+    for c in cnts:
+        # Simplify
+        epsilon = 0.0002 * cv2.arcLength(c, False)
+        approx.append(cv2.approxPolyDP(c, epsilon, False))
+
+    for c in approx:
+        cont = []
+        pv = c[0][0]
+        for p in c:
+            point = np.array([p[0,0],p[0,1]])
+            print point
+            # if euclidean_dist(pv, point) > dist_thresh:
+            #print math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1]))
+            if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) > dist_thresh:
+                cont.append(point)
+                pv = point
+        lstcont.append(cont)
+    return lstcont

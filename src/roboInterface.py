@@ -30,8 +30,10 @@ def ExecuteCommand(data):
         elif Command == 'BSR':
             robotParamters.InitSocRoutine()
         elif Command[0] == 'i':
-            robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
-            #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/grid_1.png', 0))
+            robotParamters.RunningSocialAction = True
+            #robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+            robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
+            robotParamters.RunningSocialAction = False
         elif Command[0]=='A':
             robotParamters.ExecuteAnimationSingular(Command[2:])
         elif Command[0]=='r':
