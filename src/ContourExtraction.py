@@ -8,7 +8,7 @@ def ImageContoursCustomSet1(img,isTesting=False):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     gray = 255-gray
-    _,cnts,_=cv2.findContours(gray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    _,cnts,_=cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     lstcont = []
     for i in cnts:
         cont = []
@@ -40,32 +40,66 @@ def ImageContoursCustomSet2(img,isTesting=False):
 
 def JamesContourAlg(img):
     import math,numpy as np
-    dist_thresh = 6
-
-    retval, gray = cv2.threshold(cv2.cvtColor(img,cv2.COLOR_BGR2GRAY), 200, 255, cv2.THRESH_BINARY_INV)
-
-    #cv2.imshow('',gray)
-    #cv2.waitKey(20202002)
+# dist thesh == 14, ep_val == 0.0015
+    dist_thresh = 14 #8 #14 
+    ep_val = 0.00015
+    retval, gray = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
+    print('James contour code')
+  #  cv2.imshow('',gray)
+   # cv2.waitKey(200)
     # Code to find contours
-    _,cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     lstcont = []
     approx = []
-
+     
     for c in cnts:
         # Simplify
-        epsilon = 0.0002 * cv2.arcLength(c, False)
+        epsilon = ep_val * cv2.arcLength(c, False)
         approx.append(cv2.approxPolyDP(c, epsilon, False))
-
+     
     for c in approx:
+        isEmpty = True
         cont = []
         pv = c[0][0]
         for p in c:
-            point = np.array([p[0,0],p[0,1]])
-            print point
-            # if euclidean_dist(pv, point) > dist_thresh:
-            #print math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1]))
-            if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) > dist_thresh:
-                cont.append(point)
-                pv = point
-        lstcont.append(cont)
+            	point = np.array([p[0,0],p[0,1]])
+           	# print point 
+            	if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) >= dist_thresh:
+		    	cont.append(point)
+		    	isEmpty = False
+		    	pv = point
+        if isEmpty == False:
+            lstcont.append(cont)
+
+    temp_img = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+    c_i =0
+    for c in lstcont:
+            # print(lstcont)
+	    print('____________________________________________________________')
+            print(c)
+            print('____________________________________________________________')
+           # pv = c
+            isFirst = True
+            for p in c:
+                cn = (p[0], p[1])
+                #print(cn)
+                if isFirst == True:
+                    pv = cn
+                    isFirst = False
+                #  if euclidean_dist(pv, cn) > dist_thresh:
+                if (c_i == 0):
+                    cv2.line(temp_img , pv, cn, color=(255, 0, 0), thickness=1)
+                elif (c_i == 1):
+                    cv2.line(temp_img, pv, cn, color=(0, 255, 0), thickness=1)
+                else:
+                    cv2.line(temp_img, pv, cn, color=(0, 0, 255), thickness=1)
+                pv = cn
+
+
+                c_i += 1
+                if c_i >= 3:
+                    c_i = 0
+
+    cv2.imshow('Results', temp_img)
+    cv2.waitKey(500)
     return lstcont

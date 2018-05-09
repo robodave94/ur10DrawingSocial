@@ -47,8 +47,8 @@
 </rosparam>
 
 <param name="AutoCalibrate" type="bool" value="True" />
-<param name="AnimationsFileLoc" type="str" value="/home/nao/catkin_ws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
-<param name="ImagesPath" type="str" value="/home/nao/catkin_ws/src/ur10DrawingSocial/robot_img_v2/" />
+<param name="AnimationsFileLoc" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
+<param name="ImagesPath" type="str" value="/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/" />
 <param name="speedParameters" type="double" value="0.2" />
 <param name="roboIP" type="str" value="10.0.0.157" />
 
