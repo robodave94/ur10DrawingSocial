@@ -59,18 +59,24 @@ def ExecuteCommand(data):
         elif Command == '2':
             #Point at paper
             robotParamters.SingleAction('PointAtPaper')
-        elif Command == '3':
+        elif Command == '5':
             #pointAtClips
             robotParamters.SingleAction('PointAtClips')
         elif Command == '4':
             #Point at signature line
-            robotParamters.SingleAction('PointAtSigLine')
-        elif Command == '5':
-            #Point at sign art
-            robotParamters.SignArt()
+            robotParamters.SingleAction('PointAtLine')
+        elif Command == '3':
+            robotParamters.RunningSocialAction = True
+            robotParamters.DrawSig()
         elif Command == '6':
             #Say goodbye
             robotParamters.SingleAction('Goodbye')
+        elif Command=='SetAn_A':
+            robotParamters.ChooseAniSet('A')
+        elif Command == 'SetAn_B':
+            robotParamters.ChooseAniSet('B')
+        elif Command == 'SetAn_C':
+            robotParamters.ChooseAniSet('C')
         elif Command == 'Obs':
             # continouslyDraw
             robotParamters.ContinouslyWaitState('Observe')
@@ -85,6 +91,7 @@ def ExecuteCommand(data):
     else:
         print 'No Command Sent'
     return
+
 
 #this subscriber will overwrite the social commands
 def OverwriteCommand(data):

@@ -59,10 +59,10 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             while self.IdleCon == True:
                 # running idle animations
                 # find AnimationNAMEwithidletage
+                time.sleep(random.randint(2,5))
                 self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[0]))
                 self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[1]))
                 self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.NodPose[0]))
-                time.sleep(random.randint(2,5))
         elif action == 'WithdrawPose':
             self.WaitingAction = 'WithdrawPose'
             self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(self.withdrawPose))
@@ -70,34 +70,95 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                 time.sleep(0.01)
         return
 
-
-
-    def RunDrawing(self,image):
-        def DrawContour(pts):
-            if self.RunningSocialAction==False:
-                return
-            self.ExecuteSingleMotionWithInterrupt(
-                [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
-            if self.RunningSocialAction==False:
-                return
-            self.ExecuteMultiMotionWithInterrupt(pts)
-            if self.RunningSocialAction==False:
-                return
-            self.ExecuteSingleMotionWithInterrupt(
-                [pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
-            if self.RunningSocialAction==False:
-                return
+    def ChooseAniSet(self,code):
+        self.ResetAnimation()
+        names=['_Greet',
+               '_PointAtCup',
+               '_PointAtPaper',
+               '_Sign',
+               '_PointAtLine',
+               '_PointAtClips',
+               '_Goodbye']
+        if code=='A':
+            codesToRem=['B','C']
+        elif code=='B':
+            codesToRem = ['A', 'C']
+        elif code=='C':
+            codesToRem = ['A', 'B']
+        else:
             return
 
+        for codeitem in codesToRem:
+            for nm in names:
+                print 'Finding ',str(codeitem)+str(nm)
+                ac = [i for i in self.Animations if i[0] == str(codeitem)+str(nm)]
+                self.Animations.remove(ac[0])
+                print 'Removed animation ',ac
+        return
+
+
+    def DrawSig(self):
+        self.pub.publish('RunningSingleAction: Signing')
+        imsz = [420,594]
+        print [imsz[0], imsz[1]]
+        sigpts=[[[413,400],[567,400]],
+                [[479,370],[510,370]],
+                [[492,350],[492,394]],
+                [[516,345],[516,396],[545,399],[534,345]],
+                [[550,394],[550,352],[563,373],[550,380],[567,387]],
+                [[550, 333], [550, 367], [565, 365], [565, 333], [550, 333]],
+                [[565,332],[565,369]],
+                [[575,333],[575,367],[578,367],[581,370],[583,371],[586,374],[589,377],[592,380],[590,333],[575,333]]]
+
+        for y in sigpts:
+            self.ExtraContours.append(y)
+            if len(y)>0:
+                pts = self.convertToTDspaceList(y, [imsz[0], imsz[1]])
+                if self.RunningSocialAction==False:
+                    return
+                self.DrawContour(pts)
+            self.ExtraContours.remove(y)
+
+
+        self.pub.publish('FinishedSingleAction: Signing')
+
+        return
+
+    def DrawContour(self,pts):
+        if self.RunningSocialAction == False:
+            return
+        self.ExecuteSingleMotionWithInterrupt(
+            [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+        if self.RunningSocialAction == False:
+            return
+        self.ExecuteMultiMotionWithInterrupt(pts)
+        if self.RunningSocialAction == False:
+            return
+        self.ExecuteSingleMotionWithInterrupt(
+            [pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4],
+             self.endPntPose[5]])
+        if self.RunningSocialAction == False:
+            return
+        return
+    def RunDrawing(self,image):
         lines = ContourExtraction.JamesContourAlg(image)
         print lines
-        for y in lines:
+        for q in range(0,len(lines)-1):
+            y = lines[q]
+            print y
+            self.ExtraContours.append(y)
             if len(y)>0:
                 pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
                 if self.RunningSocialAction==False:
                     return
-                DrawContour(pts)
-        print 'Completed Contour Construction'
+                self.DrawContour(pts)
+            self.ExtraContours.remove(y)
+        while len(self.ExtraContours)>0:
+            self.DrawContour(self.ExtraContours[0])
+            self.ExtraContours.remove(self.ExtraContours[0])
+        print 'Completed Contour Construction, now examining rewrites'
+
+
         self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
 
@@ -105,7 +166,8 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.IdleCon=True
         self.RunningSocialAction=True
         self.pub.publish('RunningSingleAction: '+activity)
-        self.ExecuteAnimationSingular(activity)
+        ac = self.FindAnimations(activity)
+        self.ExecuteAnimationSingular(ac)
         self.pub.publish('FinishedSingleAction: '+activity)
         self.ContinouslyWaitState(self.WaitingAction)
         return
@@ -126,7 +188,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                  'Draw First Image Set',
                  'Completed First Draw, Now Running Contemplate Animation',
                  'Completed comptemplation, Running Second Drawing']
-        socialCmds=['Greeting',
+        socialCmds=['Greet',
                  'ExecuteDrawing',
                  'ContemplateAnimation',
                  'ExecuteDrawing']
@@ -154,7 +216,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         while self.IdleCon == True:
             print 'Idle',self.IdleCon
             #continously run idle animation
-            ac = self.FindAnimations('Idle')
+            ac = self.FindAnimations('Search')
             self.ExecuteAnimationSingular(ac)
             if self.IdleCon==False or self.RunningSocialAction==False:
                 break
@@ -177,7 +239,9 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         index = self.ImageIndex
         self.Imgs = [cv2.imread(str(listImgFiles[index]) + '_1.png'),
                      cv2.imread(str(listImgFiles[index]) + '_2.png')]
-        index +=1
+        self.ImageIndex +=1
+        if self.ImageIndex==len(listImgFiles):
+            self.ImageIndex = 0
         return
 
     '''

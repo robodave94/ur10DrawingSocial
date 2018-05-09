@@ -44,6 +44,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
 
         Imheight = sz[0]
         Imwidth = sz[1]
+        print Imheight,Imwidth
 
         def checkRange(val, Max, Min, typ):
             if (val <= Max and val >= Min) or (val <= Min and val >= Max):
@@ -145,7 +146,6 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
         for i in self.Animations:
             if str(i[0]).__contains__(Tag):
                 aniTag.append(i)
-
         if len(aniTag)==0:
             print Tag
             raise ValueError('No value found for')

@@ -9,6 +9,7 @@ class RobotResearchObject (object):
     def InitBaseVariables(self):
         self.pub = rospy.Publisher('SocialReturnValues', String, queue_size=10)
         self.ImageIndex = 0
+        self.ExtraContours=[]
         self.StateOfWait = False
         self.StepsTaken = [
             'Idle',
@@ -82,7 +83,7 @@ class RobotResearchObject (object):
 
         return
 
-    def RunRetreat(self,drawing=False,ptsLeftInDraw=[]):
+    def RunRetreat(self,drawing=False):
         print self.xZero,self.xMax,self.InteruptedPosition[0]
         if max(self.xZero, self.xMax) > self.InteruptedPosition[0] and min(self.xZero, self.xMax) < \
                 self.InteruptedPosition[0]:
@@ -93,11 +94,7 @@ class RobotResearchObject (object):
         elif min(self.xZero, self.xMax) > self.InteruptedPosition[0]:
             self.ExecuteSingleMotionWait(self.translateToDifferential(self.rightwithDraw))
         self.Interruption = False
-        if drawing==False:
-            return
-        #elif drawing is true,
-        #finish drawing
-
+        return
 
     def ExecuteMultiMotionWait(self,pts):
         self.rob.movels(pts,acc = self.a,vel=self.v,wait=True)
