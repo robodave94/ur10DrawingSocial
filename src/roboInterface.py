@@ -36,8 +36,8 @@ def ExecuteCommand(data):
             robotParamters.SocialAction('ExecuteDrawing',sInd=1)
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
-            #robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
-            robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
+            robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+            #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
             robotParamters.RunningSocialAction = False
         elif Command[0]=='A':
             robotParamters.IdleCon=True
@@ -71,8 +71,7 @@ def ExecuteCommand(data):
             #Point at signature line
             robotParamters.SingleAction('PointAtLine')
         elif Command == '3':
-            robotParamters.RunningSocialAction = True
-            robotParamters.DrawSig()
+            robotParamters.SingleAction('Signing')
         elif Command == '6':
             #Say goodbye
             robotParamters.SingleAction('Goodbye')

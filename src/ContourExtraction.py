@@ -1,14 +1,20 @@
 import cv2
-def ImageContoursCustomSet1(img,isTesting=False):
+def JamesContourAl1g(img,isTesting=False):
 
-    try:
+    '''try:
         cimg2 = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
         gray = cv2.cvtColor(cimg2, cv2.COLOR_BGR2GRAY)
     except:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)'''
+    retval, gray = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
 
-    gray = 255-gray
-    _,cnts,_=cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    try:
+	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    except:
+	gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+	gray = gray-255
+	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
     lstcont = []
     for i in cnts:
         cont = []
@@ -38,6 +44,21 @@ def ImageContoursCustomSet2(img,isTesting=False):
 #print ImageContoursCustomSet2(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/human_2.png'))
 
 
+def JamesContourAlgff(img):
+    import math,numpy as np
+    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    gray = gray-255
+    pts = np.array(np.nonzero(gray))
+    lstcont = []
+    while len(pts[0]>0):
+	lstcont.append([pts[1][0],pts[0][0]])
+	pts.remove(pts[1][0])
+	pts.remove(pts[0][0])
+	print lstcont
+    print pts
+    return pts
+
+
 def JamesContourAlg(img):
     import math,numpy as np
 # dist thesh == 14, ep_val == 0.0015
@@ -48,7 +69,14 @@ def JamesContourAlg(img):
   #  cv2.imshow('',gray)
    # cv2.waitKey(200)
     # Code to find contours
-    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    print gray.shape
+    try:
+	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    except:
+	gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+	gray = gray-255
+	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     lstcont = []
     approx = []
      

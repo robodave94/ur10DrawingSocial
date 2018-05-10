@@ -98,7 +98,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
 
     def DrawSig(self):
-        self.pub.publish('RunningSingleAction: Signing')
+        #self.pub.publish('RunningSingleAction: Signing')
         imsz = [420,594]
         print [imsz[0], imsz[1]]
         sigpts=[[[413,400],[567,400]],
@@ -120,7 +120,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExtraContours.remove(y)
 
 
-        self.pub.publish('FinishedSingleAction: Signing')
+        #self.pub.publish('FinishedSingleAction: Signing')
 
         return
 
@@ -166,8 +166,11 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.IdleCon=True
         self.RunningSocialAction=True
         self.pub.publish('RunningSingleAction: '+activity)
-        ac = self.FindAnimations(activity)
-        self.ExecuteAnimationSingular(ac)
+        if activity!='Signing':
+            ac = self.FindAnimations(activity)
+            self.ExecuteAnimationSingular(ac)
+        else:
+	    self.DrawSig()
         self.pub.publish('FinishedSingleAction: '+activity)
         self.ContinouslyWaitState(self.WaitingAction)
         return
