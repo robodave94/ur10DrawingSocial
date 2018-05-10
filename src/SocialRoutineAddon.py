@@ -143,7 +143,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
     def RunDrawing(self,image):
         lines = ContourExtraction.JamesContourAlg(image)
         print lines
-        for q in range(0,len(lines)-1):
+        for q in range(0,len(lines)):
             y = lines[q]
             print y
             self.ExtraContours.append(y)

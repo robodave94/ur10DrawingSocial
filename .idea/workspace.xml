@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6a33e834-a862-4593-ae5b-7ab81f9621ae" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/BeginDrawing.launch" afterPath="$PROJECT_DIR$/launch/BeginDrawing.launch" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AnimationCMD.csv" afterPath="$PROJECT_DIR$/src/AnimationCMD.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DN_LIB.py" afterPath="$PROJECT_DIR$/src/DN_LIB.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv" afterPath="$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RobotObj.py" afterPath="$PROJECT_DIR$/src/RobotObj.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SocialRoutineAddon.py" afterPath="$PROJECT_DIR$/src/SocialRoutineAddon.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/roboInterface.py" afterPath="$PROJECT_DIR$/src/roboInterface.py" />
     </list>
@@ -21,11 +16,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="roboInterface.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="roboInterface.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1116">
-              <caret line="70" column="26" lean-forward="false" selection-start-line="70" selection-start-column="26" selection-end-line="70" selection-end-column="26" />
+            <state relative-caret-position="306">
+              <caret line="35" column="64" lean-forward="true" selection-start-line="35" selection-start-column="64" selection-end-line="35" selection-end-column="64" />
               <folding>
                 <element signature="e#22#34#0" expanded="true" />
               </folding>
@@ -36,22 +31,12 @@
       <file leaf-file-name="SocialRoutineAddon.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SocialRoutineAddon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1692">
-              <caret line="100" column="56" lean-forward="false" selection-start-line="100" selection-start-column="56" selection-end-line="100" selection-end-column="56" />
+            <state relative-caret-position="460">
+              <caret line="151" column="43" lean-forward="false" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#7668#7773#1" expanded="false" />
+                <element signature="e#7666#7771#1" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AnimationCMD.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AnimationCMD.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1782">
-              <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -76,7 +61,7 @@
       <file leaf-file-name="RobotObj.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2538">
+            <state relative-caret-position="888">
               <caret line="146" column="46" lean-forward="false" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -85,21 +70,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OldAnimations_NOTUSED.csv" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RunRet</find>
       <find>IdleCon</find>
       <find>cancel</find>
       <find>Animation</find>
@@ -122,13 +96,14 @@
       <find>Inter</find>
       <find>DrawContour</find>
       <find>PointAt</find>
-      <find>ExtractDraw</find>
       <find>RunSocia</find>
       <find>DrawContou</find>
       <find>Obser</find>
       <find>Sign</find>
       <find>Nod</find>
       <find>DrawSig</find>
+      <find>ExtractDraw</find>
+      <find>SocialAction</find>
     </findStrings>
     <replaceStrings>
       <replace>self.ExecuteAnimationSingular</replace>
@@ -156,9 +131,9 @@
         <option value="$PROJECT_DIR$/src/RobotObj.py" />
         <option value="$PROJECT_DIR$/src/DN_LIB.py" />
         <option value="$PROJECT_DIR$/src/AnimationCMD.csv" />
-        <option value="$PROJECT_DIR$/src/roboInterface.py" />
-        <option value="$PROJECT_DIR$/src/SocialRoutineAddon.py" />
         <option value="$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv" />
+        <option value="$PROJECT_DIR$/src/SocialRoutineAddon.py" />
+        <option value="$PROJECT_DIR$/src/roboInterface.py" />
       </list>
     </option>
   </component>
@@ -184,8 +159,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,6 +211,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -815,17 +790,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AnimationCMD.csv">
+    <entry file="file://$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1782">
-          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+        <state relative-caret-position="72">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2538">
+        <state relative-caret-position="888">
           <caret line="146" column="46" lean-forward="false" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
@@ -833,32 +808,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
+    <entry file="file://$PROJECT_DIR$/src/AnimationCMD.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1116">
-          <caret line="70" column="26" lean-forward="false" selection-start-line="70" selection-start-column="26" selection-end-line="70" selection-end-column="26" />
-          <folding>
-            <element signature="e#22#34#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="915">
+          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SocialRoutineAddon.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1692">
-          <caret line="100" column="56" lean-forward="false" selection-start-line="100" selection-start-column="56" selection-end-line="100" selection-end-column="56" />
+        <state relative-caret-position="460">
+          <caret line="151" column="43" lean-forward="false" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7668#7773#1" expanded="false" />
+            <element signature="e#7666#7771#1" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/OldAnimations_NOTUSED.csv">
+    <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="306">
+          <caret line="35" column="64" lean-forward="true" selection-start-line="35" selection-start-column="64" selection-end-line="35" selection-end-column="64" />
+          <folding>
+            <element signature="e#22#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
