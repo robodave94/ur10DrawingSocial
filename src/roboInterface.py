@@ -29,6 +29,11 @@ def ExecuteCommand(data):
             robotParamters.CancelSocialRoutine()
         elif Command == 'BSR':
             robotParamters.InitSocRoutine()
+        elif Command=='SDE':
+            robotParamters.RunningSocialAction=True
+            robotParamters.ExtractDrawing()
+            robotParamters.SocialAction('ExecuteDrawing')
+            robotParamters.SocialAction('ExecuteDrawing',sInd=1)
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
             #robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
@@ -123,4 +128,4 @@ def RobotBegin():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     initRobot()
-    RobotBegin()
+RobotBegin()

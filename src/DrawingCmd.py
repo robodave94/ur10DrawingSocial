@@ -93,7 +93,7 @@ def talker():
             if StateBool1==True and StateBool2==True:
                 #Running the state motion command, need to able to interrupt and send to single motion and return
                 if rwpt == 'Obs' or rwpt == 'Nod' or rwpt == 'Pse' or rwpt == '1' or rwpt == '2' or rwpt == '3' \
-                        or rwpt == '4'or rwpt == '5'or rwpt == '6' or rwpt == 'BSR':
+                        or rwpt == '4'or rwpt == '5'or rwpt == '6' or rwpt == 'BSR' or rwpt=='SDE':
                     pubOver.publish('FinishIdle')
                     time.sleep(0.1)
                     pub.publish(rwpt)
@@ -131,4 +131,4 @@ if __name__ == '__main__':
     try:
         talker()
     except rospy.ROSInterruptException:
-        pass
+pass
