@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a33e834-a862-4593-ae5b-7ab81f9621ae" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DrawingCmd.py" afterPath="$PROJECT_DIR$/src/DrawingCmd.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ContourExtraction.py" afterPath="$PROJECT_DIR$/src/ContourExtraction.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,82 +13,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="roboInterface.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/roboInterface.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="28" column="48" lean-forward="true" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
-              <folding>
-                <element signature="e#22#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DrawingCmd.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="97" column="35" lean-forward="true" selection-start-line="97" selection-start-column="35" selection-end-line="97" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SocialRoutineAddon.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SocialRoutineAddon.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="151" column="43" lean-forward="false" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#7666#7771#1" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DN_LIB.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DN_LIB.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="954">
-              <caret line="59" column="29" lean-forward="false" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
-              <folding>
-                <element signature="e#12#24#0" expanded="true" />
-                <element signature="e#1681#1868#0" expanded="false" />
-                <element signature="e#3673#4242#1" expanded="false" />
-                <element signature="e#4309#4347#0" expanded="false" />
-                <element signature="e#9376#10142#0" expanded="false" />
-                <element signature="e#10234#11936#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RobotObj.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="888">
-              <caret line="146" column="46" lean-forward="false" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContourExtraction.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="49" column="80" lean-forward="false" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -144,7 +69,6 @@
         <option value="$PROJECT_DIR$/roboInterface.py" />
         <option value="$PROJECT_DIR$/launch/BeginDrawing.launch" />
         <option value="$PROJECT_DIR$/src/opencv_contours.py" />
-        <option value="$PROJECT_DIR$/src/ContourExtraction.py" />
         <option value="$PROJECT_DIR$/src/RobotObj.py" />
         <option value="$PROJECT_DIR$/src/DN_LIB.py" />
         <option value="$PROJECT_DIR$/src/AnimationCMD.csv" />
@@ -152,6 +76,7 @@
         <option value="$PROJECT_DIR$/src/SocialRoutineAddon.py" />
         <option value="$PROJECT_DIR$/src/roboInterface.py" />
         <option value="$PROJECT_DIR$/src/DrawingCmd.py" />
+        <option value="$PROJECT_DIR$/src/ContourExtraction.py" />
       </list>
     </option>
   </component>
@@ -419,9 +344,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.109433964" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.109433964" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.100734524" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -821,20 +745,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
+    <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="146" column="46" lean-forward="false" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="49" column="80" lean-forward="false" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
+        <state relative-caret-position="321">
+          <caret line="105" column="56" lean-forward="true" selection-start-line="105" selection-start-column="56" selection-end-line="105" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -849,11 +763,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DrawingCmd.py">
+    <entry file="file://$PROJECT_DIR$/src/ContourExtraction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="97" column="35" lean-forward="true" selection-start-line="97" selection-start-column="35" selection-end-line="97" selection-end-column="35" />
+        <state relative-caret-position="1944">
+          <caret line="108" column="14" lean-forward="false" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RobotObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="888">
+          <caret line="146" column="46" lean-forward="false" selection-start-line="146" selection-start-column="46" selection-end-line="146" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
