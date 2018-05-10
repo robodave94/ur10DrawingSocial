@@ -106,4 +106,4 @@ def JamesContourAlg(img):
     cv2.waitKey(500)
 
 
-return lstcont
+    return lstcont
