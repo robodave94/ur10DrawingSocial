@@ -30,13 +30,11 @@ def ExecuteCommand(data):
         elif Command == 'BSR':
             robotParamters.InitSocRoutine()
         elif Command=='SDE':
-            robotParamters.RunningSocialAction=True
-            robotParamters.ExtractDrawing()
-            robotParamters.SocialAction('ExecuteDrawing')
-            robotParamters.SocialAction('ExecuteDrawing',sInd=1)
+            robotParamters.SingleAction('SDE')
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
-            robotParamters.RunDrawing(cv2.imread(Command[3:], 0))
+	    rospy.get_param('')
+            robotParamters.RunDrawing(cv2.imread(rospy.get_param('ImagesPath')+Command[3:], 0))
             #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
             robotParamters.RunningSocialAction = False
         elif Command[0]=='A':

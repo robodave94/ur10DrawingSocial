@@ -11,6 +11,8 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         #first node pose higher one
         self.InitializeVariablesROS()
         self.WaitingAction = 'NodAtUser'
+	self.ep_valP=[0,0]
+	self.dist_threshP=[0,0]
         return
 
     def CancelSocialRoutine(self):
@@ -31,8 +33,8 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
     def SocialAction(self, activity, sInd=0):
         if activity == 'ExecuteDrawing':
             print self.Imgs[sInd]
-            self.RunDrawing(self.Imgs[sInd])
-        elif activity == 'Greeting':
+            self.RunDrawing(self.Imgs[sInd],inputVals=sInd)
+        elif activity == 'Greet':
             # execute a single greeting animation
             ac = self.FindAnimations('Greet')
             self.ExecuteAnimationSingular(ac)
@@ -140,11 +142,13 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         if self.RunningSocialAction == False:
             return
         return
-    def RunDrawing(self,image):
-        lines = ContourExtraction.JamesContourAlg(image)
+    def RunDrawing(self,image,inputVals=0):
+        lines = ContourExtraction.JamesContourAlg(image,self.ep_valP[inputVals],self.dist_threshP[inputVals])
         print lines
-        for q in range(0,len(lines)-1):
+	line_num = 0
+        for q in range(0,len(lines)):
             y = lines[q]
+	    line_num += 1
             print y
             self.ExtraContours.append(y)
             if len(y)>0:
@@ -156,33 +160,35 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         while len(self.ExtraContours)>0:
             self.DrawContour(self.ExtraContours[0])
             self.ExtraContours.remove(self.ExtraContours[0])
-        print 'Completed Contour Construction, now examining rewrites'
-
-
-        self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
+        print ('Completed Contour Construction', line_num)
+        #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
 
     def SingleAction(self,activity):
         self.IdleCon=True
         self.RunningSocialAction=True
         self.pub.publish('RunningSingleAction: '+activity)
-        if activity!='Signing':
-            ac = self.FindAnimations(activity)
-            self.ExecuteAnimationSingular(ac)
-        else:
+        if activity=='Signing':
 	    self.DrawSig()
+        elif activity=='SDE':
+	    self.ExtractDrawing()
+            self.SocialAction('ExecuteDrawing')
+            self.SocialAction('ExecuteDrawing',sInd=1)
+        else:
+	    ac = self.FindAnimations(activity)
+            self.ExecuteAnimationSingular(ac)	    
         self.pub.publish('FinishedSingleAction: '+activity)
         self.ContinouslyWaitState(self.WaitingAction)
         return
 
-    def SignArt(self):
+    '''def SignArt(self):
         import cv2
         self.pub.publish('RunningSingleAction: SignArt')
         print os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')
         self.RunDrawing(cv2.imread(os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')))
         self.pub.publish('FinishedSingleAction: SignArt')
         self.ContinouslyWaitState(self.WaitingAction)
-        return
+        return'''
 
 
     def BeginSequenceofDraw(self):
@@ -199,7 +205,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         for i in range(0,4):
             if self.RunningSocialAction == True:
                 print self.RunningSocialAction
-                self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+                #self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
                 self.pub.publish(pubmsgs[i])
                 if i==3:
                     self.SocialAction(socialCmds[i],sInd=1)
@@ -223,7 +229,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExecuteAnimationSingular(ac)
             if self.IdleCon==False or self.RunningSocialAction==False:
                 break
-            self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
+            #self.ExecuteSingleMotionWithInterrupt(self.initHoverPos)
         self.IdleCon=True
         if self.RunningSocialAction==True:
             self.BeginSequenceofDraw()
@@ -245,6 +251,28 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.ImageIndex +=1
         if self.ImageIndex==len(listImgFiles):
             self.ImageIndex = 0
+	print 'chose drawing ',str(listImgFiles[index])
+	#/home/nao/catkin_ws/src/ur10DrawingSocial/robot_img_v2
+	imnm = str(listImgFiles[index])[len(rospy.get_param('ImagesPath')):]
+	print imnm
+	#SetPar
+	if imnm=='sea':
+	    self.ep_valP=[0.0015,0.0015]
+	    self.dist_threshP=[10,14]
+	elif imnm=='elephant':
+	    self.ep_valP=[0.0015,0.0015]
+	    self.dist_threshP=[2,10]
+	elif imnm=='island':
+	    self.ep_valP=[0.0015,0.0015]
+	    self.dist_threshP=[10,14]
+	elif imnm=='space':
+	    self.ep_valP=[0.0008,0.0015]
+	    self.dist_threshP=[9,4]
+	elif imnm=='cloud':
+	    self.ep_valP=[0.001,0.001]
+	    self.dist_threshP=[4,4]
+	else:
+	    raise ValueError('name is' + imnm)
         return
 
     '''

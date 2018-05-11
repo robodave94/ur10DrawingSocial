@@ -59,24 +59,27 @@ def JamesContourAlgff(img):
     return pts
 
 
-def JamesContourAlg(img):
+def JamesContourAlg(img,ep_val=0,dist_thresh=0):
+    
     import math,numpy as np
 # dist thesh == 14, ep_val == 0.0015
-    dist_thresh = 14 #8 #14 
-    ep_val = 0.00015
-    retval, gray = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
+    #dist_thresh = 4 
+    #ep_val = 0.001 
+    retval, gray = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV)
     print('James contour code')
   #  cv2.imshow('',gray)
    # cv2.waitKey(200)
-    # Code to find contours
-
+    # Code to find contours 
     print gray.shape
+    #cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+ 
     try:
 	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     except:
 	gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 	gray = gray-255
 	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+ 
     lstcont = []
     approx = []
      
@@ -101,7 +104,9 @@ def JamesContourAlg(img):
 
     temp_img = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
     c_i =0
+    cnt_index = 0
     for c in lstcont:
+	    cnt_index += 1
             # print(lstcont)
 	    print('____________________________________________________________')
             print(c)
@@ -130,4 +135,5 @@ def JamesContourAlg(img):
 
     cv2.imshow('Results', temp_img)
     cv2.waitKey(500)
+    print (' contour count ',cnt_index)
     return lstcont
