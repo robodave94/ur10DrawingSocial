@@ -1,0 +1,106 @@
+#include "../include/robo_draw/paint.h"
+#include "ui_paint.h"
+
+#include <QGraphicsScene>
+#include <QMessageBox>
+#include <QLine> 
+
+
+paint::paint(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::paint)
+{
+     ui->setupUi(this);
+
+    scene = new QGraphicsScene();
+    this->scene->setSceneRect(0, 0, 800, 800);
+    ui->graphicsView->setScene(scene);
+
+    robotPen.setWidth(6);
+    mousePen.setColor(Qt::red);
+    mousePen.setWidth(10);
+
+    isFirstPoint = true;
+
+   connect(ui->clearBtn, SIGNAL(clicked()), this, SLOT(on_button_clear_clicked()));
+   connect(ui->undoBtn, SIGNAL(clicked()), this, SLOT(on_button_undo_clicked()));
+   connect(ui->redoBtn, SIGNAL(clicked()), this, SLOT(on_button_redo_clicked()));
+   connect(ui->drawbtn, SIGNAL(clicked()), this, SLOT(on_button_draw_clicked()));
+}
+
+paint::~paint()
+{
+    //delete ui;
+}
+
+void paint::on_button_draw_clicked()
+{
+    //Send ROS code
+
+}
+
+
+void paint::on_button_undo_clicked()
+{
+    if(LineLst.length() > 0)
+    {
+    QLine tempL = LineLst.last();
+    LineLst.removeLast();
+    tempLst.append(tempL);
+     renderDrawing();
+    }
+}
+
+void paint::on_button_redo_clicked()
+{
+    if(tempLst.length() > 0)
+    {
+    QLine tempL = tempLst.last();
+    tempLst.removeLast();
+    LineLst.append(tempL);
+     renderDrawing();
+    }
+}
+
+void paint::on_button_clear_clicked()
+{
+    LineLst.clear();
+    renderDrawing();
+}
+
+void paint::mousePressEvent(QMouseEvent *e)
+{
+    this->scene->setSceneRect(QRect( 0, 0, paint::width(), paint::height()));
+    //Move to top of the mouse
+    QPoint origin = e->pos() - QPoint(10,10);
+
+    if(isFirstPoint == true)
+    {
+        isFirstPoint = false;
+        p1.setX(origin.x());
+        p1.setY(origin.y());
+    }
+    else
+    {
+        isFirstPoint = true;
+        p2.setX(origin.x());
+        p2.setY(origin.y());
+
+        QLine l(p1.x(), p1.y(),p2.x(), p2.y());
+        LineLst.append(l);
+       // scene->addLine(p1.x(), p1.y(), p2.x(), p2.y(), robotPen);
+    }
+
+     renderDrawing();
+     scene->addRect(origin.x(), origin.y(), 1, 1, mousePen, QBrush(Qt::SolidPattern));
+}
+
+void paint::renderDrawing()
+{
+    ui->graphicsView->scene()->clear();
+    QLine Line;
+    /*  Q_FOREACH(Line , LineLst) {
+            scene->addLine(Line.p1().x(), Line.p1().y(), Line.p2().x(), Line.p2().y(), robotPen);
+        }*/
+    ui->graphicsView->setScene(scene);
+}

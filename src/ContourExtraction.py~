@@ -63,8 +63,8 @@ def JamesContourAlg(img,ep_val=0,dist_thresh=0):
     
     import math,numpy as np
 # dist thesh == 14, ep_val == 0.0015
-    #dist_thresh = 4 
-    #ep_val = 0.001 
+    dist_thresh = 4 
+    ep_val = 0.001 
     retval, gray = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV)
     print('James contour code')
   #  cv2.imshow('',gray)

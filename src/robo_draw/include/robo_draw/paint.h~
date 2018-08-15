@@ -1,0 +1,51 @@
+#ifndef PAINT_H
+#define PAINT_H
+
+#include <QMainWindow>
+#include <QDialog>
+#include <QtGui>
+#include <QtCore>
+#include <QGraphicsScene>
+#include <QList>
+#include <QGraphicsView>
+#include <QMouseEvent>
+
+#include <QLine>
+
+namespace Ui {
+class paint;
+}
+//QMainWindow
+class paint : public QMainWindow //QGraphicsView
+{
+    Q_OBJECT
+
+public:
+    explicit paint(QWidget *parent = 0);
+    ~paint();
+    QList<QLine> tempLst;
+    QList<QLine> LineLst;
+    QList<QLine> DrawnLst;
+    QPoint p1, p2;
+    QPen robotPen;
+    QPen mousePen;
+    bool isFirstPoint;
+    float scaleX;
+    float scaleY;
+
+private Q_SLOTS::
+    void mousePressEvent(QMouseEvent *e);
+    void on_button_clear_clicked();
+    void on_button_undo_clicked();
+    void on_button_redo_clicked();
+    void on_button_draw_clicked();
+
+private:
+    Ui::paint *ui;
+    QGraphicsScene *scene;
+
+protected:
+    void renderDrawing();
+};
+
+#endif // PAINT_H
