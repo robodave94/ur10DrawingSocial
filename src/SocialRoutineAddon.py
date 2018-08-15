@@ -149,7 +149,10 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
     def RunDrawing(self,image,inputVals=0):
         lines = ContourExtraction.JamesContourAlg(image,self.ep_valP[inputVals],self.dist_threshP[inputVals])
         print lines
+<<<<<<< HEAD
 	line_num = 0
+=======
+>>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
         for q in range(0,len(lines)):
             y = lines[q]
 	    line_num += 1
