@@ -42,11 +42,11 @@ bool QNode::init() {
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+	chatter_publisher = n.advertise<std_msgs::String>("UserDraws", 1000);
 	start();
 	return true;
 }
- 
+ /*
 bool QNode::init(QList< QList<QPoint> > inputLst, double w, double h) { 
 	ros::init(init_argc,init_argv,"robo_draw");
 LineLst = inputLst;
@@ -58,20 +58,22 @@ height =h;
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1);
+	chatter_publisher = n.advertise<std_msgs::String>("UserDraws", 1);
 	start();
+
+	//sendMsg(inputLst,  w,  h);
 	return true;
 }
- 
+ */
 
 void QNode::run() {
 	//ros::Rate loop_rate(1);
-	 
+/*	 
 	//while ( ros::ok() ) {
 
 		std_msgs::String msg;
 		std::stringstream ss;
-		ss << "width = "<<width  << "height = "<<height;
+		ss << " width = "<<width  << " height = "<<height << " ";
 		for(int i =0; i<LineLst.size();i++)
 		{
 			ss << "[";
@@ -95,7 +97,35 @@ void QNode::run() {
 		ros::spinOnce(); 
 	//}
 	//std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
-	//Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
+*/	
+Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
+}
+
+void QNode::sendMsg(QList< QList<QPoint> > inputLst, double w, double h)
+{
+	std_msgs::String msg;
+		std::stringstream ss;
+		ss << "w|"<<width  << "|h|"<<height << "|";
+		for(int i =0; i<inputLst.size();i++)
+		{
+			//ss << "*";
+		   	for(int z =0; z<inputLst[i].size(); z++)
+			{
+			    ss << "["<< inputLst[i][z].x()<< ","<< inputLst[i][z].y()<<"]" ;
+				if(z<inputLst[i].size()-1)
+				{
+					ss << "*";
+				}
+			}
+			//ss << "*";
+			if(i<inputLst.size()-1)
+			{
+				ss << ".";
+			}
+		}
+		msg.data = ss.str();
+		chatter_publisher.publish(msg);
+		ros::spinOnce(); 
 }
 /*
 

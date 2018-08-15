@@ -14,7 +14,14 @@ def AnaylseInterupt(data):
     robotParamters.DetectedInteruptSig(data.data)
     return
 
-
+def UserDraw(data):
+    #robotParamters.DetectedInteruptSig(data.data)
+    robotParamters.RunningSocialAction = True
+    rospy.get_param('')
+    robotParamters.RunUserDrawing(data.data)
+    #robotParamters.RunDrawing(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/robosign.png', 0))
+    robotParamters.RunningSocialAction = False
+    return
 
 def ExecuteCommand(data):
     Command = data.data
@@ -31,6 +38,10 @@ def ExecuteCommand(data):
             robotParamters.InitSocRoutine()
         elif Command=='SDE':
             robotParamters.SingleAction('SDE')
+            robotParamters.RunningSocialAction=True
+            robotParamters.ExtractDrawing()
+            robotParamters.SocialAction('ExecuteDrawing')
+            robotParamters.SocialAction('ExecuteDrawing',sInd=1)
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
 	    rospy.get_param('')
@@ -118,6 +129,7 @@ def initRobot():
 def RobotBegin():
     rospy.init_node('ur10ArtInterface', anonymous=True)
     rospy.Subscriber("visionCollisionDetection", String, AnaylseInterupt)
+	rospy.Subscriber("UserDraws", String, UserDraw)
     rospy.Subscriber("socialCmd", String, ExecuteCommand)
     rospy.Subscriber("OverwrittingSubscrier",String, OverwriteCommand)
     rospy.spin()

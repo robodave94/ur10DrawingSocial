@@ -15,7 +15,7 @@ def AnaylseInterupt(data):
     return
 
 def UserDraw(data):
-    robotParamters.DetectedInteruptSig(data.data)
+    robotParamters.UserDrawsInteruptSig(data.data)  
     return
 
 def ExecuteCommand(data):
@@ -32,14 +32,11 @@ def ExecuteCommand(data):
         elif Command == 'BSR':
             robotParamters.InitSocRoutine()
         elif Command=='SDE':
-<<<<<<< HEAD
             robotParamters.SingleAction('SDE')
-=======
             robotParamters.RunningSocialAction=True
             robotParamters.ExtractDrawing()
             robotParamters.SocialAction('ExecuteDrawing')
             robotParamters.SocialAction('ExecuteDrawing',sInd=1)
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
 	    rospy.get_param('')
@@ -127,7 +124,7 @@ def initRobot():
 def RobotBegin():
     rospy.init_node('ur10ArtInterface', anonymous=True)
     rospy.Subscriber("visionCollisionDetection", String, AnaylseInterupt)
-	rospy.Subscriber("UserListener", String, UserDraw)
+	rospy.Subscriber("UserDraws", String, UserDraw)
     rospy.Subscriber("socialCmd", String, ExecuteCommand)
     rospy.Subscriber("OverwrittingSubscrier",String, OverwriteCommand)
     rospy.spin()

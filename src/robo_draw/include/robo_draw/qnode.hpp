@@ -38,8 +38,9 @@ public:
 	QNode(int argc, char** argv );
 	virtual ~QNode();
 	bool init();
-	bool init(QList< QList<QPoint> > inputLst, double w, double h); 
-	void run();
+    //bool init(QList< QList<QPoint> > inputLst, double w, double h);
+    void run();
+    void sendMsg(QList< QList<QPoint> > inputLst, double w, double h);
 	QList< QList<QPoint> > LineLst;
 	double width;
 	double height;

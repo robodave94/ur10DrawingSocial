@@ -1,14 +1,9 @@
-import cv2
-<<<<<<< HEAD
+import cv2 
 def JamesContourAl1g(img,isTesting=False):
 
-    '''try:
-=======
-
-
+    '''try: 
 def ImageContoursCustomSet1(img, isTesting=False):
-    try:
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+    try: 
         cimg2 = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
         gray = cv2.cvtColor(cimg2, cv2.COLOR_BGR2GRAY)
     except:
@@ -21,12 +16,8 @@ def ImageContoursCustomSet1(img, isTesting=False):
 	gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 	gray = gray-255
 	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-<<<<<<< HEAD
-=======
     gray = 255 - gray
-    _, cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+    _, cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) 
     lstcont = []
     for i in cnts:
         cont = []
@@ -53,8 +44,7 @@ def ImageContoursCustomSet2(img, isTesting=False):
         lstcont.append([i[0, 0], i[0, 1]])
     return lstcont
 
-
-<<<<<<< HEAD
+ 
 def JamesContourAlgff(img):
     import math,numpy as np
     gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -90,8 +80,7 @@ def JamesContourAlg(img,ep_val=0,dist_thresh=0):
 	gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 	gray = gray-255
 	cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
- 
-=======
+  
 # print ImageContoursCustomSet2(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/human_2.png'))
 
 
@@ -105,8 +94,7 @@ def JamesContourAlg(img):
     #  cv2.imshow('',gray)
     # cv2.waitKey(200)
     # Code to find contours
-    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) 
     lstcont = []
     approx = []
      
@@ -119,28 +107,24 @@ def JamesContourAlg(img):
         isEmpty = True
         cont = []
         pv = c[0][0]
-        for p in c:
-<<<<<<< HEAD
+        for p in c: 
             	point = np.array([p[0,0],p[0,1]])
            	# print point 
             	if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) >= dist_thresh:
 		    	cont.append(point)
 		    	isEmpty = False
-		    	pv = point
-=======
+		    	pv = point 
             point = np.array([p[0, 0], p[0, 1]])
             # print point
             if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (
                 pv[1] - point[1])) >= dist_thresh:
                 cont.append(point)
                 isEmpty = False
-                pv = point
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+                pv = point 
         if isEmpty == False:
             lstcont.append(cont)
 
-    temp_img = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-<<<<<<< HEAD
+    temp_img = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR) 
     c_i =0
     cnt_index = 0
     for c in lstcont:
@@ -174,8 +158,7 @@ def JamesContourAlg(img):
     cv2.imshow('Results', temp_img)
     cv2.waitKey(500)
     print (' contour count ',cnt_index)
-    return lstcont
-=======
+    return lstcont 
     c_i = 0
     for c in lstcont:
         # print(lstcont)
@@ -207,5 +190,4 @@ def JamesContourAlg(img):
     cv2.waitKey(500)
 
 
-    return lstcont
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+    return lstcont 

@@ -21,9 +21,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.pub.publish("Cancelling Social Routine")
         self.ReturnToInit()
         return
-
-
-
+ 
     def InitSocRoutine(self):
         self.RunningSocialAction=True
         self.pub.publish('Social Routine Activated')
@@ -148,11 +146,8 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
 
     def RunDrawing(self,image,inputVals=0):
         lines = ContourExtraction.JamesContourAlg(image,self.ep_valP[inputVals],self.dist_threshP[inputVals])
-        print lines
-<<<<<<< HEAD
-	line_num = 0
-=======
->>>>>>> 4dbdd891d390f325531125b431d575811a0e1ea6
+        print lines 
+	line_num = 0 
         for q in range(0,len(lines)):
             y = lines[q]
 	    line_num += 1
@@ -170,6 +165,27 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         print ('Completed Contour Construction', line_num)
         #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
+##New
+    def RunUserDrawing(self, lines, width, height): 
+	line_num = 0 
+        for q in range(0,len(lines)):
+            y = lines[q]
+	    line_num += 1
+            print y
+            self.ExtraContours.append(y)
+            if len(y)>0:
+                pts = self.convertToTDspaceList(y, width, height)
+                if self.RunningSocialAction==False:
+                    return
+                self.DrawContour(pts)
+            self.ExtraContours.remove(y)
+        while len(self.ExtraContours)>0:
+            self.DrawContour(self.ExtraContours[0])
+            self.ExtraContours.remove(self.ExtraContours[0])
+        print ('Completed Contour Construction', line_num)
+        #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
+        return
+
 
     def SingleAction(self,activity):
         self.IdleCon=True

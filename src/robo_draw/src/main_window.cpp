@@ -42,7 +42,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
    ui.graphicsView->setAttribute(Qt::WA_TransparentForMouseEvents);
    setMouseTracking(true);
  
-    
+    qnode.init();
 }
 
 MainWindow::~MainWindow() {}
@@ -58,7 +58,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_button_draw_clicked()
 {
     //Send ROS code
-    qnode.init(LineLst, MainWindow::width(), MainWindow::height());
+    qnode.sendMsg(LineLst, MainWindow::width(), MainWindow::height());
 
 //MainWindow::width(), MainWindow::height();
 }
