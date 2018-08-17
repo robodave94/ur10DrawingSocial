@@ -57,9 +57,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_button_draw_clicked()
 {
-    //Send ROS code
-    qnode.sendMsg(LineLst, MainWindow::width(), MainWindow::height());
-
+    //Send ROS code 
+int w = ui.graphicsView->size().width();//1200;//594;//MainWindow::width(); //594;
+int h = ui.graphicsView->size().height();//700;//420;//MainWindow::height();//420;
+    qnode.sendMsg(LineLst, w,h);
+   ui.label->setText(QString::number(w) + " " + QString::number(h));
 //MainWindow::width(), MainWindow::height();
 }
 
@@ -108,7 +110,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
     QPoint origin = e->pos() - QPoint(15,15);
-	ui.label->setText(QString::number(origin.x()) + " , " + QString::number(origin.y()));
+	//ui.label->setText(QString::number(origin.x()) + " , " + QString::number(origin.y()));
  
 	if(origin.x() > 0 && origin.x() < ui.graphicsView->width() && origin.y() > 0 && origin.y() < ui.graphicsView->height())
 	{

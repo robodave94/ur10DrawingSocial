@@ -1,5 +1,4 @@
-import cv2
-<<<<<<< HEAD
+import cv2 
 def JamesContourAl1g(img,isTesting=False):
 
     '''try: 
@@ -84,18 +83,19 @@ def JamesContourAlg(img,ep_val=0,dist_thresh=0):
   
 # print ImageContoursCustomSet2(cv2.imread('/home/naodev/Documents/default_ROSws/src/ur10DrawingSocial/robot_img_v2/human_2.png'))
 
-
-def JamesContourAlg(img):
-    import math, numpy as np
-    # dist thesh == 14, ep_val == 0.0015
-    dist_thresh = 14  # 8 #14
-    ep_val = 0.00015
-    retval, gray = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
-    print('James contour code')
-    #  cv2.imshow('',gray)
-    # cv2.waitKey(200)
-    # Code to find contours
-    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) 
+    '''
+    def JamesContourAlg_TEST(img):
+	    import math, numpy as np
+	    # dist thesh == 14, ep_val == 0.0015
+	    dist_thresh = 14  # 8 #14
+	    ep_val = 0.00015
+	    retval, gray = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
+	    print('James contour code')
+	    #  cv2.imshow('',gray)
+	    # cv2.waitKey(200)
+	    # Code to find contours
+	    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) 
+    '''
     lstcont = []
     approx = []
      
@@ -108,20 +108,13 @@ def JamesContourAlg(img):
         isEmpty = True
         cont = []
         pv = c[0][0]
-        for p in c: 
-            	point = np.array([p[0,0],p[0,1]])
-           	# print point 
-            	if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) >= dist_thresh:
-		    	cont.append(point)
-		    	isEmpty = False
-		    	pv = point 
-            point = np.array([p[0, 0], p[0, 1]])
-            # print point
-            if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (
-                pv[1] - point[1])) >= dist_thresh:
-                cont.append(point)
-                isEmpty = False
-                pv = point 
+        for p in c:   
+	     point = np.array([p[0,0],p[0,1]])
+	     # print point 
+	     if math.sqrt((pv[0] - point[0]) * (pv[0] - point[0]) + (pv[1] - point[1]) * (pv[1] - point[1])) >= dist_thresh:
+	        cont.append(point)
+	    	isEmpty = False
+	    	pv = point  
         if isEmpty == False:
             lstcont.append(cont)
 
@@ -160,6 +153,7 @@ def JamesContourAlg(img):
     cv2.waitKey(500)
     print (' contour count ',cnt_index)
     return lstcont 
+'''
     c_i = 0
     for c in lstcont:
         # print(lstcont)
@@ -192,3 +186,4 @@ def JamesContourAlg(img):
 
 
     return lstcont 
+'''

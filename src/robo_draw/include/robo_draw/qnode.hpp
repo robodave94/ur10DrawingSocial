@@ -40,7 +40,7 @@ public:
 	bool init();
     //bool init(QList< QList<QPoint> > inputLst, double w, double h);
     void run();
-    void sendMsg(QList< QList<QPoint> > inputLst, double w, double h);
+    void sendMsg(QList< QList<QPoint> > inputLst, int w, int h);
 	QList< QList<QPoint> > LineLst;
 	double width;
 	double height;

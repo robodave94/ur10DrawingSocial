@@ -123,9 +123,6 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         #self.pub.publish('FinishedSingleAction: Signing') 
         return
 
-    def DrawUserInput(self,pts,imsz):
-	#translatePoints
-	
 
     def DrawContour(self,pts):
         if self.RunningSocialAction == False:
@@ -155,6 +152,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExtraContours.append(y)
             if len(y)>0:
                 pts = self.convertToTDspaceList(y, [image.shape[0], image.shape[1]])
+		print pts
                 if self.RunningSocialAction==False:
                     return
                 self.DrawContour(pts)
@@ -165,23 +163,29 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         print ('Completed Contour Construction', line_num)
         #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
-##New
+ 
+
     def RunUserDrawing(self, lines, width, height): 
-	line_num = 0 
+	def DrawUsrContour(pts):
+            self.ExecuteSingleMotionWithInterrupt(
+            [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            self.ExecuteMultiMotionWithInterrupt(pts)
+            self.ExecuteSingleMotionWithInterrupt([pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4],self.endPntPose[5]])
+            return
+	print lines
+        line_num = 0 
         for q in range(0,len(lines)):
             y = lines[q]
 	    line_num += 1
-            print y
+            #print y
             self.ExtraContours.append(y)
             if len(y)>0:
-                pts = self.convertToTDspaceList(y, width, height)
-                if self.RunningSocialAction==False:
-                    return
-                self.DrawContour(pts)
+                pts = self.convertToTDspaceList(y, [height, width])
+		#print 'startingdraw'
+		#print pts                
+		DrawUsrContour(pts)
+		#print 'ending'
             self.ExtraContours.remove(y)
-        while len(self.ExtraContours)>0:
-            self.DrawContour(self.ExtraContours[0])
-            self.ExtraContours.remove(self.ExtraContours[0])
         print ('Completed Contour Construction', line_num)
         #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return

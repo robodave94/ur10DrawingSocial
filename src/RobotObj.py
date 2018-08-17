@@ -1,9 +1,12 @@
 import urx
 from urx import ursecmon
-import time
+import time 
+import SocialRoutineAddon
 import numpy as np
 import rospy
 from std_msgs.msg import String
+
+
 class RobotResearchObject (object):
     #endregion
     def InitBaseVariables(self):
@@ -63,28 +66,30 @@ class RobotResearchObject (object):
                 self.RunRetreat()
         return
 
-   def UserDrawsInteruptSig(self,stringInput):
-           stringInput = data.data
-	   strparam = stringInput.split('|')
-	   width = 0;
-	   height = 0;
-	   if strparam[0] == 'w' :
-		width = float(strparam[1])  
-	   if strparam[2] == 'h' :
-	 	height = float(strparam[3]) 
-	   lns = strparam[4].split('.')
-	   lstcont = []
-	   for l in lns :
+    def UserDrawsInteruptSig(self,stringInput):  
+	strparam = stringInput.split('|')
+	width = 0;
+	height = 0;
+	if strparam[0] == 'w' :
+		width = int(strparam[1])  
+	if strparam[2] == 'h' :
+		height = int(strparam[3]) 
+	lns = strparam[4].split('.')
+	lstcont = []
+	for l in lns :
 		pnts = l.split('*')
 		cont = []
 		for p in pnts :
 		    p = p.split(',') 
-		    point = np.array([int(p[0]),int(p[1])]) 
+		    val_1 = int(p[0])
+ 		    val_2 = int(p[1]) 
+		    point = np.array([val_1,val_2]) 
+		    print point
 		    cont.append(point)
 		lstcont.append(cont)
-	    print lstcont
-	    robotParamters.RunUserDrawing(lstcont, width, height) 
-        return
+	print str(width) + " *** " + str(height)
+	self.RunUserDrawing(lstcont, width, height) 
+	return 
  
     def setFreeDriveFalse(self):
         self.rob.set_freedrive(False)

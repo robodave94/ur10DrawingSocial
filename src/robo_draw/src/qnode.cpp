@@ -101,11 +101,11 @@ void QNode::run() {
 Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
 
-void QNode::sendMsg(QList< QList<QPoint> > inputLst, double w, double h)
+void QNode::sendMsg(QList< QList<QPoint> > inputLst, int w, int h)
 {
 	std_msgs::String msg;
 		std::stringstream ss;
-		ss << "w|"<<width  << "|h|"<<height << "|";
+		ss << "w|"<<w  << "|h|"<<h << "|";
 		for(int i =0; i<inputLst.size();i++)
 		{
 			//ss << "*";
