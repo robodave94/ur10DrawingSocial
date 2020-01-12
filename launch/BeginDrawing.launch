@@ -1,0 +1,49 @@
+<launch>
+<rosparam param="NodDifferentials"> 
+[[0.5291455925024414, -0.03034807352273914, 0.43128687588871556, -1.3683145507462502, 1.101706320931434, -1.0609688635043568],
+[0.4935175747921279, -0.03668972556963098, 0.21252658726820486, -2.0388383907666903, 1.712432864507593, -0.45602095605244014]]
+</rosparam>
+
+<rosparam param="WithdrawPose"> 
+[0.2315782314047281, -0.018147188194155124, 0.23392074710498126, -2.0179219658154275, 1.308188748820095, -0.531007263411219]
+</rosparam>
+
+<rosparam param="bottomLeftPoint"> 
+[0.23104778980255766, 0.24793632383865974, -0.03224987470057958]
+</rosparam>
+
+<rosparam param="topLeftPoint"> 
+[0.4666618759634216, 0.25291638037694064, -0.03228186416443077]
+</rosparam>
+
+<rosparam param="topRightPoint"> 
+[0.473505013803841, -0.22170459709107834, -0.03132146894849473]
+</rosparam>
+
+<rosparam param="bottomRightPoint"> 
+[0.24184182034338517, -0.21603222251156465, -0.03241458008375467]
+
+</rosparam>
+
+<rosparam param="leftRetreat"> 
+[0.44489580032856835, 0.17410903586614504, 0.243436775549851, -2.4925415815770706, 1.2928431108554579, -1.2409012802646346]
+</rosparam>
+
+<rosparam param="RightRetreat"> 
+[0.3311745812738104, -0.27810764101088414, 0.27850237903881253, -0.6917372476502341, 2.111405215761425, 0.1449044252895175]
+</rosparam>
+
+<param name="AutoCalibrate" type="bool" value="True" />
+<param name="AnimationsFileLoc" type="str" value="/home/rosdevuc/drawing_ws/src/ur10DrawingSocial/src/AnimationCMD.csv" />
+<param name="ImagesPath" type="str" value="/home/rosdevuc/drawing_ws/src/ur10DrawingSocial/robot_img_v2/" />
+
+<param name="speedParameters" type="double" value="0.1" />
+
+<param name="roboIP" type="str" value="169.254.178.76" />
+
+<node name="visionCollisionCmdNode" pkg="ur10DrawingSocial" type="VisionCollisionSim.py" output="screen" launch-prefix="gnome-terminal --command"/>
+<node name="interfaceNode" pkg="ur10DrawingSocial" type="roboInterface.py" output="screen"/>
+<node name="drawingCmd" pkg="ur10DrawingSocial" type="DrawingCmd.py" output="screen" launch-prefix="gnome-terminal --command"/>
+
+
+</launch>
