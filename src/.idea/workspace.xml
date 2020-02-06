@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e19a48d0-b3f4-4c60-8d6a-99e5fd449aec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../launch/BeginDrawing.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../launch/BeginDrawing.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/clouds_1.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/clouds_2.png" beforeDir="false" />
@@ -12,9 +11,7 @@
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/sun_2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/whale_1.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/whale_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialRoutineAddon.py" beforeDir="false" afterPath="$PROJECT_DIR$/SocialRoutineAddon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roboInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/roboInterface.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
