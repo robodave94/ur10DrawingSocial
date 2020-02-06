@@ -10,7 +10,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
     def InitSocialRoutineSettings(self):
         #first node pose higher one
         self.InitializeVariablesROS()
-        self.WaitingAction = 'NodAtUser'
+        self.WaitingAction = 'WithdrawPose'
         self.ep_valP=[0,0]
         self.dist_threshP=[0,0]
         return
@@ -37,7 +37,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             ac = self.FindAnimations('Greet')
             self.ExecuteAnimationSingular(ac)
         elif activity == 'ContemplateAnimation':
-            # execute a single greeting animation
+            # execute a single contemplate animation
             ac = self.FindAnimations('Contemplate')
             self.ExecuteAnimationSingular(ac)
         return
@@ -175,7 +175,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         return
  
 
-    def validateFineDetails(self,points):
+   ''' def validateFineDetails(self,points):
         import math
         #separation into substrings based on groups of three, hardcoded ur10 parameters
         indexlist = []
@@ -188,10 +188,10 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             print p1,p2
             print '---',math.sqrt(math.pow(p1[0]-p2[0],2)+math.pow(p1[1]-p2[1],2))
             #get difference between the point and the point two spots ahead
-            '''if math.sqrt(math.pow(p1[0]-p2[0],2)+math.pow(p1[1]-p2[1],2))<=0.02:
+            if math.sqrt(math.pow(p1[0]-p2[0],2)+math.pow(p1[1]-p2[1],2))<=0.02:
                 indexlist.append(x)
                 indexlist.append(x+1)
-                indexlist.append(x+2)'''
+                indexlist.append(x+2)
         print '------List of indices'
         print indexlist
         print '------End'
@@ -199,7 +199,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                     [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
         self.ExecuteMultiMotionWithInterrupt(pts)
         self.ExecuteSingleMotionWithInterrupt([pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4],self.endPntPose[5]])
-        return pts
+        return pts'''
 
 
     def RunUserDrawing(self, lines, width, height): 
@@ -240,6 +240,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExtractDrawing()
             self.SocialAction('ExecuteDrawing')
             self.SocialAction('ExecuteDrawing',sInd=1)
+            self.SocialAction('ContemplateAnimation')
         else:
             ac = self.FindAnimations(activity)
             self.ExecuteAnimationSingular(ac)	    
@@ -343,6 +344,9 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         elif imnm == 'sun':
             self.ep_valP = [0.0015,0.0015]
             self.dist_threshP = [4, 4]
+        elif imnm == 'whale':
+            self.ep_valP = [0.0015, 0.0015]
+            self.dist_threshP = [10, 14]
         else:
             raise ValueError('invalid name of file:' + imnm)
         return
