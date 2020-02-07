@@ -37,7 +37,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             ac = self.FindAnimations('Greet')
             self.ExecuteAnimationSingular(ac)
         elif activity == 'ContemplateAnimation':
-            # execute a single contemplate animation
+            # execute a single greeting animation
             ac = self.FindAnimations('Contemplate')
             self.ExecuteAnimationSingular(ac)
         return
@@ -173,6 +173,34 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         print ('Completed Contour Construction', line_num)
         #self.rob.movel(self.initHoverPos, acc=self.a, vel=self.v, wait=True)
         return
+ 
+
+    def validateFineDetails(self,points):
+        import math
+        #separation into substrings based on groups of three, hardcoded ur10 parameters
+        indexlist = []
+        print 'POINTS 1'
+        print points
+        print 'POINTS 2'
+        for x in range(0, len(points[0])-4):
+            p1 = points[0][x]
+            p2 = points[0][x+2]
+            print p1,p2
+            print '---',math.sqrt(math.pow(p1[0]-p2[0],2)+math.pow(p1[1]-p2[1],2))
+            #get difference between the point and the point two spots ahead
+            '''if math.sqrt(math.pow(p1[0]-p2[0],2)+math.pow(p1[1]-p2[1],2))<=0.02:
+                indexlist.append(x)
+                indexlist.append(x+1)
+                indexlist.append(x+2)'''
+        print '------List of indices'
+        print indexlist
+        print '------End'
+        self.ExecuteSingleMotionWithInterrupt(
+                    [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+        self.ExecuteMultiMotionWithInterrupt(pts)
+        self.ExecuteSingleMotionWithInterrupt([pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4],self.endPntPose[5]])
+        return pts
+
 
     def RunUserDrawing(self, lines, width, height): 
         def DrawUsrContour(pts,validate=False):
@@ -212,7 +240,6 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExtractDrawing()
             self.SocialAction('ExecuteDrawing')
             self.SocialAction('ExecuteDrawing',sInd=1)
-            self.SocialAction('ContemplateAnimation')
         else:
             ac = self.FindAnimations(activity)
             self.ExecuteAnimationSingular(ac)	    
