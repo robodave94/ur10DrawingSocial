@@ -240,6 +240,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ExtractDrawing()
             self.SocialAction('ExecuteDrawing')
             self.SocialAction('ExecuteDrawing',sInd=1)
+            self.SocialAction('ContemplateAnimation')
         else:
             ac = self.FindAnimations(activity)
             self.ExecuteAnimationSingular(ac)	    
@@ -254,7 +255,10 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         self.pub.publish('RunningSingleAction: SignArt')
         print os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')
         self.RunDrawing(cv2.imread(os.path.join(rospy.get_param('ImagesPath'), 'robosign.png')))
+        print os.path.join(rospy.get_param('ImagesPath'), 'robosignLine.png')
+        self.RunDrawing(cv2.imread(os.path.join(rospy.get_param('ImagesPath'), 'robosignLine.png')))
         self.pub.publish('FinishedSingleAction: SignArt')
+        self.SingleAction('PointAtPaper')
         self.ContinouslyWaitState(self.WaitingAction)
         return
 

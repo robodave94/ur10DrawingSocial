@@ -40,10 +40,6 @@ def ExecuteCommand(data):
             robotParamters.InitSocRoutine()
         elif Command=='SDE':
             robotParamters.SingleAction('SDE')
-            robotParamters.RunningSocialAction=True
-            robotParamters.ExtractDrawing()
-            robotParamters.SocialAction('ExecuteDrawing')
-            robotParamters.SocialAction('ExecuteDrawing',sInd=1)
         elif Command[0] == 'i':
             robotParamters.RunningSocialAction = True
 	        #rospy.get_param('')
