@@ -6,8 +6,8 @@
       <change beforePath="$PROJECT_DIR$/../robot_img_v2/robosign.png" beforeDir="false" afterPath="$PROJECT_DIR$/../robot_img_v2/robosign.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AnimationCMD.csv" beforeDir="false" afterPath="$PROJECT_DIR$/AnimationCMD.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DrawingCmd.py" beforeDir="false" afterPath="$PROJECT_DIR$/DrawingCmd.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SocialRoutineAddon.py" beforeDir="false" afterPath="$PROJECT_DIR$/SocialRoutineAddon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roboInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/roboInterface.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

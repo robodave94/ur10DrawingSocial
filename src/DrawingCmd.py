@@ -69,7 +69,7 @@ def SocialMessages(data):
         prntngMsg = Retcolors.OKGREEN + "Press Enter To Finish Idle Animation or Q to stop: " + Retcolors.ENDC
 
     elif StateBool1 == False and StateBool2 == True:
-        prntngMsg=Retcolors.UNDERLINE + "Runing single animation, press enter to interupt or wait: " + Retcolors.ENDC
+        prntngMsg=Retcolors.UNDERLINE + "Running single animation, press enter to interrupt or wait: " + Retcolors.ENDC
 
     elif StateBool1 == False and StateBool2 == False:
         prntngMsg = "Please enter your command: "

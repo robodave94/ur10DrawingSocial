@@ -209,7 +209,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
                 print pts
             else:'''
             self.ExecuteSingleMotionWithInterrupt(
-            [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[4], self.endPntPose[5]])
+            [pts[0][0], pts[0][1], self.zHover, self.endPntPose[3], self.endPntPose[5], self.endPntPose[5]])
             self.ExecuteMultiMotionWithInterrupt(pts)
             self.ExecuteSingleMotionWithInterrupt([pts[len(pts) - 1][0], pts[len(pts) - 1][1], self.zHover, self.endPntPose[3], self.endPntPose[4],self.endPntPose[5]])
             return
@@ -350,6 +350,9 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
         elif imnm == 'whale':
             self.ep_valP = [0.0015, 0.0015]
             self.dist_threshP = [10, 14]
+        elif imnm=='elephant':
+            self.ep_valP=[0.0008,0.0015]
+            self.dist_threshP=[9,4]
         else:
             raise ValueError('invalid name of file:' + imnm)
         return
