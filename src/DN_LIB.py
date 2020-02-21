@@ -220,18 +220,27 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
 
     def ExecuteAnimationSingular(self, animationName):
         executeble = [i for i in self.Animations if i[0] == animationName]
+        velBackup = self.v
+        accBackup = self.a
         for e in executeble[0][1]:
-            if e[0] != 'delay' and e[0] != 'Description':
+            if e[0] != 'delay' and e[0] != 'Description' and e[0] != 'speed':
                 #self.ExecuteSingleMotionWithInterrupt(self.translateToDifferential(e))
                 self.ExecuteSingleMotionWithInterrupt(e)
                 print('robPos: ', self.rob.getl())
+            elif e[0] == 'speed':
+                self.a = float(e[1])
+                self.v = float(e[1])
             elif e[0] == 'delay':
                 print('Delaying For ', e[1])
                 time.sleep(float(e[1]))
             elif e[0] == 'Description':
                 print(e[1])
             if self.IdleCon == False or self.RunningSocialAction == False:
+                self.v = velBackup
+                self.a = accBackup
                 return
+        self.v = velBackup
+        self.a = accBackup
         return
 
     def resetPos(self):
