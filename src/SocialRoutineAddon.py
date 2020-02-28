@@ -59,7 +59,7 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             while self.IdleCon == True:
                 # running idle animations
                 # find AnimationNAMEwithidletage
-                time.sleep(random.randint(2,5))
+                time.sleep(random.randint(1,3))
                 self.ExecuteSingleMotionWithInterrupt(self.NodPose[0])
                 self.ExecuteSingleMotionWithInterrupt(self.NodPose[1])
                 self.ExecuteSingleMotionWithInterrupt(self.NodPose[0])
@@ -351,6 +351,12 @@ class DrawingRobotInstance(DN_LIB.DrawingRobotStructure):
             self.ep_valP = [0.0015, 0.0015]
             self.dist_threshP = [10, 14]
         elif imnm=='elephant':
+            self.ep_valP=[0.0008,0.0015]
+            self.dist_threshP=[9,4]
+        elif imnm=='human':
+            self.ep_valP=[0.0008,0.0015]
+            self.dist_threshP=[9,4]
+        elif imnm=='robot':
             self.ep_valP=[0.0008,0.0015]
             self.dist_threshP=[9,4]
         else:
