@@ -5,7 +5,6 @@ A ROS package that controls a ur10 to draw, fnctionality includes calibration, a
 
 It is inadvisable to use this package with the default drawing positioned anywahere except region 2
 
-
 import rospy
 import ContourExtraction
 import os
