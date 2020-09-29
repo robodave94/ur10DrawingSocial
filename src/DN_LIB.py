@@ -42,6 +42,7 @@ class DrawingRobotStructure(RobotObj.RobotResearchObject):
         self.plE1_c = 0
         self.plE1_d = 0
 
+        ## Hardcoded end-point pose
         self.endPntPose = [-0.14959202618776724, -0.6892203786569369, 0.45944469344501543,
                            -3.141369099840455, -0.023765232731069934, -0.018604100882098216]
         self.ResetAnimation()
